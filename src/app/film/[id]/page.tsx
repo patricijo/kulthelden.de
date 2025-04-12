@@ -1,10 +1,18 @@
 import { Suspense } from "react";
 
-import { getFilmData } from "@/data/getData";
+import { getFilmCastData, getFilmData } from "@/data/getData";
 import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
 import Image from "next/image";
 import { Clock, Star } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { CastCard } from "@/components/CustomUi/CastCard";
 
 type Props = {
   params: Promise<{
@@ -101,7 +109,32 @@ const FilmPageContent = async ({ params }: { params: Props["params"] }) => {
         <p className="sm:hidden text-md md:text-lg max-w-2xl">
           {filmData.overview}
         </p>
+        <FilmCast id={id} />
       </ContentContainer>
+    </>
+  );
+};
+
+const FilmCast = async ({ id }: { id: string }) => {
+  const castData = await getFilmCastData(id);
+
+  return (
+    <>
+      <h2 className="text-xl font-bold">Schauspieler</h2>
+      <Carousel className="mx-12 lg:mx-0">
+        <CarouselContent>
+          {castData.cast.map((person) => (
+            <CarouselItem
+              className="basis-1/1 md:basis-1/3 lg:basis-1/7 "
+              key={person.cast_id}
+            >
+              <CastCard castMember={person} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </>
   );
 };
