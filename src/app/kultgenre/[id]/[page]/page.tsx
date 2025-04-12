@@ -1,11 +1,10 @@
-import { ReactNode, Suspense } from "react";
+import { Suspense } from "react";
 
 import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { PaginationComponent } from "@/components/CustomUi/Pagination";
 import { getGenreData } from "../layout";
 
 type Props = {
-  children: React.ReactNode;
   params: Promise<{
     id: string;
     page: string;
@@ -15,10 +14,10 @@ type Props = {
   }>;
 };
 
-export default async function KultGenrePage({ params, children }: Props) {
+export default async function KultGenrePage({ params }: Props) {
   return (
     <Suspense>
-      <KultGenrePageContent params={params}>{children}</KultGenrePageContent>
+      <KultGenrePageContent params={params} />
     </Suspense>
   );
 }
@@ -27,7 +26,6 @@ const KultGenrePageContent = async ({
   params,
 }: {
   params: Props["params"];
-  children: ReactNode;
 }) => {
   const id = (await params).id.split("_")[0];
   const page = parseInt((await params).page, 10) || 1;
