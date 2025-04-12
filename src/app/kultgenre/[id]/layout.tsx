@@ -2,6 +2,7 @@ import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
 import { tmdbFetch } from "@/lib/tmdb";
 import { ListResponse } from "@/lib/tmdbTypes";
+import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ReactNode, Suspense } from "react";
@@ -18,19 +19,65 @@ type Props = {
   }>;
 };
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const id = (await params).id.split("_")[0];
+  const numericId = parseInt(id, 10);
+
+  if (isNaN(numericId)) {
+    return {
+      title: "Kult-Genre nicht gefunden | KultHelden.de",
+      description: "Die angeforderte Genre wurde nicht gefunden.",
+    };
+  }
+
+  try {
+    const genreData = await getGenreData(id);
+
+    return {
+      title: `${genreData.name} | KultHelden.de`,
+      description:
+        genreData.description ||
+        "Keine Beschreibung verfügbar für dieses Genre.",
+      openGraph: {
+        title: genreData.name,
+        description:
+          genreData.description ||
+          "Keine Beschreibung verfügbar für dieses Genre.",
+        images: genreData.poster_path
+          ? [
+              {
+                url: `https://image.tmdb.org/t/p/w500${genreData.poster_path}`,
+                width: 500,
+                height: 300,
+                alt: `${genreData.name} Poster`,
+              },
+            ]
+          : [],
+        type: "website",
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Genre Details | KultHelden.de",
+      description: "Fehler beim Laden der Genre-Details.",
+    };
+  }
+}
+
 export default async function KulgGenreLayout({ params, children }: Props) {
   return (
     <>
       <div className="min-h-screen bg-background">
         <Suspense>
-          <KultGenreHeader params={params}>{children}</KultGenreHeader>
+          <KultGenreContent params={params}>{children}</KultGenreContent>
         </Suspense>
       </div>
     </>
   );
 }
 
-const KultGenreHeader = async ({
+const KultGenreContent = async ({
   params,
   children,
 }: {
