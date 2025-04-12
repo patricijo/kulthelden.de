@@ -11,9 +11,8 @@ type Props = {
   children: React.ReactNode;
   params: Promise<{
     id: string;
-    page: string;
   }>;
-  searchParams: Promise<{
+  searchParams?: Promise<{
     [key: string]: string | string[] | undefined;
   }>;
 };
@@ -82,11 +81,10 @@ const KultGenreContent = async ({
   children: ReactNode;
 }) => {
   const id = (await params).id.split("_")[0];
-  const page = parseInt((await params).page, 10) || 1;
 
-  const genreData = await getGenreData(id, page);
+  const genreData = await getGenreData(id);
 
-  if (genreData.results.length === 0 && page > 1) {
+  if (genreData.results.length === 0) {
     notFound();
   }
 
