@@ -2,13 +2,10 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 
 import Link from "next/link";
 
@@ -30,35 +27,29 @@ export const Navigation = () => {
 
         <div className="hidden md:flex items-center ml-auto gap-4">
           <NavigationMenu>
-            <NavigationMenuList>
+            <NavigationMenuList className="gap-4">
               <NavigationMenuItem>
-                <Link href="/kultschauspieler" passHref legacyBehavior>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Kult-Schaupieler
-                  </NavigationMenuLink>
-                </Link>
+                <Link href="/kultschauspieler">Kult-Schaupieler</Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Kult-Genres</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-4 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  <ul className="grid w-[400px] gap-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {kultGenres.map((genre) => {
                       return (
                         <li key={genre.id}>
                           <Link
-                            passHref
-                            legacyBehavior
                             href={"/kultgenre/" + genre.id + "_" + genre.url}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
-                            <NavigationMenuLink>
+                            <div>
                               <div className="text-sm font-medium leading-none">
                                 {genre.name}
                               </div>
                               <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                                 {genre.description}
                               </p>
-                            </NavigationMenuLink>
+                            </div>
                           </Link>
                         </li>
                       );
@@ -66,11 +57,8 @@ export const Navigation = () => {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/docs" passHref legacyBehavior>
-                  <NavigationMenuLink>Über Kulthelden</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+
+              <Link href="/docs">Über Kulthelden</Link>
             </NavigationMenuList>
           </NavigationMenu>
           <ModeToggle />
