@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { PaginationComponent } from "@/components/CustomUi/Pagination";
-import { getGenreData } from "../layout";
+import { getGenreData } from "@/data/getData";
 
 type Props = {
   params: Promise<{

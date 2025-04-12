@@ -1,7 +1,6 @@
 import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
-import { tmdbFetch } from "@/lib/tmdb";
-import { ListResponse } from "@/lib/tmdbTypes";
+import { getGenreData } from "@/data/getData";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -128,16 +127,4 @@ const KultGenreContent = async ({
       </ContentContainer>
     </>
   );
-};
-
-export const getGenreData = async (id: string, page: number = 1) => {
-  "use cache";
-
-  const genreData = await tmdbFetch<ListResponse>(
-    `/list/${id}?page=${page}`,
-    {},
-    true
-  );
-
-  return genreData;
 };
