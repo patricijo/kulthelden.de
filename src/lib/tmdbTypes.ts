@@ -3,7 +3,7 @@ export interface ListResponse {
   description: string;
   favorite_count: number;
   id: string;
-  results: ListItem[];
+  results: Movie[];
   total_results: number;
   page: number;
   total_pages: number;
@@ -19,7 +19,7 @@ export interface ListResponse {
   comments: { [key: string]: string } | null;
 }
 
-export interface ListItem {
+export interface Movie {
   id: number;
   original_title: string;
   title: string;
