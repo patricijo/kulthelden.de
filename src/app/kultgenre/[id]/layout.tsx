@@ -4,7 +4,7 @@ import { getGenreData } from "@/data/getData";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 
 type Props = {
@@ -63,9 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function KulgGenreLayout({ params, children }: Props) {
   return (
     <div className="min-h-screen bg-background">
-      <Suspense>
-        <KultGenreContent params={params}>{children}</KultGenreContent>
-      </Suspense>
+      <KultGenreContent params={params}>{children}</KultGenreContent>
     </div>
   );
 }
