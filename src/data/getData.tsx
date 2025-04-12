@@ -1,7 +1,7 @@
 "use server";
 
 import { tmdbFetch } from "@/lib/tmdb";
-import { ListResponse } from "@/lib/tmdbTypes";
+import { ListResponse, MovieDetails } from "@/lib/tmdbTypes";
 
 export const getGenreData = async (id: string, page: number = 1) => {
   "use cache";
@@ -13,4 +13,12 @@ export const getGenreData = async (id: string, page: number = 1) => {
   );
 
   return genreData;
+};
+
+export const getFilmData = async (id: string) => {
+  "use cache";
+
+  const filmData = await tmdbFetch<MovieDetails>(`/movie/${id}`);
+
+  return filmData;
 };
