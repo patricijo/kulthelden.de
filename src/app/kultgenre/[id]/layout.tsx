@@ -1,8 +1,10 @@
+import { BackdropImage } from "@/components/CustomUi/BackdropImage";
+import { ContentContainer } from "@/components/CustomUi/ContentContainer";
 import { tmdbFetch } from "@/lib/tmdb";
 import { ListResponse } from "@/lib/tmdbTypes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import ReactMarkdown from "react-markdown";
 
 type Props = {
@@ -17,21 +19,24 @@ type Props = {
 };
 
 export default async function KulgGenreLayout({ params, children }: Props) {
-  const { id } = await params;
   return (
     <>
       <div className="min-h-screen bg-background">
         <Suspense>
-          <KultGenreHeader params={params} />
+          <KultGenreHeader params={params}>{children}</KultGenreHeader>
         </Suspense>
       </div>
-      {children}
-      {id}
     </>
   );
 }
 
-const KultGenreHeader = async ({ params }: { params: Props["params"] }) => {
+const KultGenreHeader = async ({
+  params,
+  children,
+}: {
+  params: Props["params"];
+  children: ReactNode;
+}) => {
   const id = (await params).id.split("_")[0];
   const page = parseInt((await params).page, 10) || 1;
 
@@ -50,43 +55,32 @@ const KultGenreHeader = async ({ params }: { params: Props["params"] }) => {
 
   return (
     <>
-      <div className="relative h-[60vh] w-full ">
-        <div className="absolute inset-0 bg-black/60 z-10" />
-        {backdropUrl !== null && (
-          <Image
-            src={backdropUrl}
-            alt={genreData.name}
-            fill
-            className="object-cover"
-            priority
-          />
-        )}
-        <div className="relative z-20 mx-auto h-full flex flex-col items-center justify-center pb-32 px-8">
-          <h1 className="text-white/90 text-4xl md:text-5xl font-bold drop-shadow-xl">
-            {genreData.name}
-          </h1>
-        </div>
-      </div>
-      <div className="max-w-6xl mx-auto p-4 md:p-8 lg:px-8 relative z-20 -mt-32 bg-white dark:bg-gray-900 rounded-lg shadow-xl flex flex-row gap-8 items-start ">
-        <div className="block w-46 md:w-64 flex-shrink-0">
-          <div className="grid grid-cols-2 grid-rows-2 gap-0 w-full max-w-2xl mx-auto rounded-md overflow-hidden shadow-lg">
-            {genreData.results.slice(0, 4).map((src, index) => (
-              <div key={index} className="relative  aspect-[2/3] ">
-                <Image
-                  src={imageBaseUrl + "w500" + src.poster_path}
-                  alt={genreData.name + " poster " + (index + 1)}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-            ))}
+      <BackdropImage image={backdropUrl} name={genreData.name} />
+      <ContentContainer>
+        <div className="flex w-full flex-row gap-4 md:gap-8">
+          <div className="hidden md:block flex-1/3">
+            <div className="grid grid-cols-2 grid-rows-2 gap-0 w-full max-w-2xl mx-auto rounded-md overflow-hidden shadow-lg">
+              {genreData.results.slice(0, 4).map((src, index) => (
+                <div key={index} className="relative  aspect-[2/3] ">
+                  <Image
+                    src={imageBaseUrl + "w500" + src.poster_path}
+                    alt={genreData.name + " poster " + (index + 1)}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex-2/3">
+            <article className="prose dark:prose-invert max-w-full">
+              <ReactMarkdown>{genreData.description}</ReactMarkdown>
+            </article>
           </div>
         </div>
-        <article className="max-w-full prose dark:prose-invert">
-          <ReactMarkdown>{genreData.description}</ReactMarkdown>
-        </article>
-      </div>
+        {children}
+      </ContentContainer>
     </>
   );
 };
