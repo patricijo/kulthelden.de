@@ -109,7 +109,10 @@ const FilmPageContent = async ({ params }: { params: Props["params"] }) => {
         <p className="sm:hidden text-md md:text-lg max-w-2xl">
           {filmData.overview}
         </p>
-        <FilmCast id={id} />
+        <h2 className="text-xl font-bold">Schauspieler</h2>
+        <Suspense>
+          <FilmCast id={id} />
+        </Suspense>
       </ContentContainer>
     </>
   );
@@ -120,7 +123,6 @@ const FilmCast = async ({ id }: { id: string }) => {
 
   return (
     <>
-      <h2 className="text-xl font-bold">Schauspieler</h2>
       <Carousel className="mx-12 lg:mx-0">
         <CarouselContent>
           {castData.cast.map((person) => (
