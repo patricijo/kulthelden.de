@@ -39,14 +39,16 @@ export function MovieCard({ movie, imageSize = "w185" }: MovieCardProps) {
         <div className="mt-2">
           <div className="flex items-center gap-2">
             <Star className="fill-yellow-400 text-yellow-400 h-4 w-4" />
-            <span className="text-sm">{movie.vote_average.toFixed(1)}</span>
+            <span className="text-sm w-full">
+              {movie.vote_average.toFixed(1)}
+            </span>
+            <p className="text-sm text-muted-foreground text-right">
+              {movie.release_date
+                ? new Date(movie.release_date).toLocaleDateString("de-DE")
+                : ""}
+            </p>
           </div>
           <p className="font-medium mt-1">{movie.title}</p>
-          <p className="text-sm text-muted-foreground text-right">
-            {movie.release_date
-              ? new Date(movie.release_date).toLocaleDateString("de-DE")
-              : ""}
-          </p>
         </div>
       </Link>
     </>
