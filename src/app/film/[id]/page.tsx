@@ -28,7 +28,7 @@ export default async function FilmPage({ params }: Props) {
   );
 }
 
-const FilmPageContent = async ({ params }: { params: Props["params"] }) => {
+const FilmPageContent = async ({ params }: Props) => {
   const id = (await params).id.split("_")[0];
 
   const filmData = await getFilmData(id);

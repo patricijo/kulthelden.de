@@ -30,7 +30,7 @@ import { CollapsibleContent } from "@radix-ui/react-collapsible";
 
 export const Navigation = () => {
   return (
-    <header className="border-b">
+    <header className="border-b bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto flex h-16 items-center gap-4 p-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
           <h2 className="text-gray-900 dark:text-white text-3xl font-bold italic">
@@ -82,7 +82,7 @@ const NavigationMenuComponent = () => {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <Link href="/docs">Über Kulthelden</Link>
+        <Link href="/kulthelden">Über Kulthelden</Link>
       </NavigationMenuList>
     </NavigationMenu>
   );

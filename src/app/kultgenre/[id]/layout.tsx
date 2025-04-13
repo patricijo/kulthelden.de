@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function KulgGenreLayout({ params, children }: Props) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Suspense>
         <KultGenreContent params={params}>{children}</KultGenreContent>
       </Suspense>
