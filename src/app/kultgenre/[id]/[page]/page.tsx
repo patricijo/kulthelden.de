@@ -6,7 +6,7 @@ import { getGenreData } from "@/data/getData";
 type Props = {
   params: Promise<{
     id: string;
-    page: string;
+    page?: string;
   }>;
 };
 
@@ -24,7 +24,9 @@ export const KultGenrePageContent = async ({
   params: Props["params"];
 }) => {
   const id = (await params).id.split("_")[0];
-  const page = parseInt((await params).page, 10) || 1;
+
+  const pageParam = (await params).page;
+  const page = pageParam ? parseInt(pageParam, 10) : 1;
 
   const genreData = await getGenreData(id, page);
 
