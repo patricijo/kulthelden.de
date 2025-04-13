@@ -47,6 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: filmData.title,
         description:
           filmData.overview || "Keine Beschreibung verfügbar für diesen Film.",
+        siteName: "Kulthelden.de",
         images: filmData.poster_path
           ? [
               {

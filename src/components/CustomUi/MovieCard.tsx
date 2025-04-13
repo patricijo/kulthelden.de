@@ -13,7 +13,7 @@ export function MovieCard({ movie, imageSize = "w185" }: MovieCardProps) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/";
   const posterUrl = movie.poster_path
     ? `${imageBaseUrl}${imageSize}${movie.poster_path}`
-    : "/placeholder-poster.jpg";
+    : null;
 
   const titleSlug = movie.title
     .toLowerCase()
@@ -28,13 +28,19 @@ export function MovieCard({ movie, imageSize = "w185" }: MovieCardProps) {
     <>
       <Link href={`/film/${movie.id}_${titleSlug}`} className="group">
         <div className="rounded-md overflow-hidden">
-          <Image
-            src={posterUrl || "/placeholder.svg"}
-            alt={movie.title}
-            width={200}
-            height={300}
-            className="object-cover w-full aspect-[2/3] group-hover:scale-105 transition-transform"
-          />
+          {posterUrl ? (
+            <Image
+              src={posterUrl || "/placeholder.svg"}
+              alt={movie.title}
+              width={200}
+              height={300}
+              className="object-cover w-full aspect-[2/3] group-hover:scale-105 transition-transform"
+            />
+          ) : (
+            <div className="object-cover w-full aspect-[2/3] group-hover:scale-105 transition-transform items-center flex bg-accent p-4 justify-center text-center">
+              Kein Bild vorhanden
+            </div>
+          )}
         </div>
         <div className="mt-2">
           <div className="flex items-center gap-2">
