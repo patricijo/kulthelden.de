@@ -1,16 +1,15 @@
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { KultGenrePageContent } from "./[page]/page";
 
 type Props = {
   params: Promise<{
     id: string;
     page: string;
   }>;
-  searchParams: Promise<{
-    [key: string]: string | string[] | undefined;
-  }>;
 };
 
 export default async function KultGenrePage({ params }: Props) {
-  const { id } = await params;
-  redirect(`/kultgenre/${id}/1`);
+  <Suspense>
+    <KultGenrePageContent params={params} />
+  </Suspense>;
 }

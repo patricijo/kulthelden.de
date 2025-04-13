@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-
 import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { PaginationComponent } from "@/components/CustomUi/Pagination";
 import { getGenreData } from "@/data/getData";
@@ -8,9 +7,6 @@ type Props = {
   params: Promise<{
     id: string;
     page: string;
-  }>;
-  searchParams: Promise<{
-    [key: string]: string | string[] | undefined;
   }>;
 };
 
@@ -22,7 +18,7 @@ export default async function KultGenrePage({ params }: Props) {
   );
 }
 
-const KultGenrePageContent = async ({
+export const KultGenrePageContent = async ({
   params,
 }: {
   params: Props["params"];
@@ -41,6 +37,7 @@ const KultGenrePageContent = async ({
               <MovieCard movie={movie} key={movie.id} />
             ))}
           </div>
+
           <PaginationComponent
             href={`/kultgenre/${id}/`}
             pageNumber={page}
