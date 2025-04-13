@@ -14,6 +14,8 @@ type Props = {
   }>;
 };
 
+const imageBaseUrl = "https://image.tmdb.org/t/p/";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = (await params).id.split("_")[0];
   const numericId = parseInt(id, 10);
@@ -38,10 +40,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description:
           genreData.description ||
           "Keine Beschreibung verfügbar für dieses Genre.",
-        images: genreData.poster_path
+        siteName: "KultHelden.de",
+        images: genreData.backdrop_path
           ? [
               {
-                url: `https://image.tmdb.org/t/p/w500${genreData.poster_path}`,
+                url: `${imageBaseUrl}original${genreData.backdrop_path}`,
                 width: 500,
                 height: 300,
                 alt: `${genreData.name} Poster`,
@@ -84,8 +87,6 @@ const KultGenreContent = async ({
   if (genreData.results.length === 0) {
     notFound();
   }
-
-  const imageBaseUrl = "https://image.tmdb.org/t/p/";
 
   // Prepare image URLs
   const backdropUrl = genreData.backdrop_path

@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Kulthelden.de ",
+  openGraph: {
+    title: "Kulthelden.de",
+    description: "Kulthelden.de",
+    siteName: "Kulthelden.de",
+  },
 };
 
 export default function RootLayout({
