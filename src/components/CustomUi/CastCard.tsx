@@ -7,7 +7,7 @@ interface CastCardProps {
   imageSize?: string;
 }
 
-export function CastCard({ castMember, imageSize = "w185" }: CastCardProps) {
+export function CastCard({ castMember, imageSize = "w300" }: CastCardProps) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/";
   const profileUrl = castMember.profile_path
     ? `${imageBaseUrl}${imageSize}${castMember.profile_path}`
@@ -36,8 +36,8 @@ export function CastCard({ castMember, imageSize = "w185" }: CastCardProps) {
             <Image
               src={profileUrl}
               alt={castMember.name}
-              width={200}
-              height={300}
+              width={300}
+              height={450}
               className="object-cover w-full aspect-[2/3] group-hover:scale-105 transition-transform"
             />
           ) : (

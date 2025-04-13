@@ -9,7 +9,7 @@ interface MovieCardProps {
   imageSize?: string;
 }
 
-export function MovieCard({ movie, imageSize = "w185" }: MovieCardProps) {
+export function MovieCard({ movie, imageSize = "w300" }: MovieCardProps) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/";
   const posterUrl = movie.poster_path
     ? `${imageBaseUrl}${imageSize}${movie.poster_path}`
@@ -32,8 +32,8 @@ export function MovieCard({ movie, imageSize = "w185" }: MovieCardProps) {
             <Image
               src={posterUrl || "/placeholder.svg"}
               alt={movie.title}
-              width={200}
-              height={300}
+              width={300}
+              height={450}
               className="object-cover w-full aspect-[2/3] group-hover:scale-105 transition-transform"
             />
           ) : (
