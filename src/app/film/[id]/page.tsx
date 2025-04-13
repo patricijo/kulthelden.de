@@ -13,12 +13,61 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { CastCard } from "@/components/CustomUi/CastCard";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{
     id: string;
   }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const numericId = parseInt(id, 10);
+
+  if (isNaN(numericId)) {
+    return {
+      title: "Film nicht gefunden | KultHelden.de",
+      description: "Der angeforderte Film wurde nicht gefunden.",
+    };
+  }
+
+  try {
+    const filmData = await getFilmData(id);
+
+    return {
+      title: `${filmData.title} (${
+        filmData.release_date
+          ? new Date(filmData.release_date).getFullYear()
+          : "Unknown"
+      }) | KultHelden.de`,
+      description:
+        filmData.overview || "Keine Beschreibung verfügbar für diesen Film.",
+      openGraph: {
+        title: filmData.title,
+        description:
+          filmData.overview || "Keine Beschreibung verfügbar für diesen Film.",
+        images: filmData.poster_path
+          ? [
+              {
+                url: `https://image.tmdb.org/t/p/w500${filmData.poster_path}`,
+                width: 500,
+                height: 750,
+                alt: `${filmData.title} poster`,
+              },
+            ]
+          : [],
+        type: "website",
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Film Details | KultHelden.de",
+      description: "Fehler beim Laden der Film-Details.",
+    };
+  }
+}
 
 export default async function FilmPage({ params }: Props) {
   return (
