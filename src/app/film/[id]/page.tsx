@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 
-import { getFilmCastData, getFilmData } from "@/data/getData";
+import {
+  getFilmCastData,
+  getFilmCollectionData,
+  getFilmData,
+} from "@/data/getData";
 import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
 import Image from "next/image";
@@ -14,6 +18,7 @@ import {
 } from "@/components/ui/carousel";
 import { CastCard } from "@/components/CustomUi/CastCard";
 import { Metadata } from "next";
+import { MovieCard } from "@/components/CustomUi/MovieCard";
 
 type Props = {
   params: Promise<{
@@ -159,10 +164,23 @@ const FilmPageContent = async ({ params }: Props) => {
         <p className="sm:hidden text-md md:text-lg max-w-2xl">
           {filmData.overview}
         </p>
-        <h2 className="text-xl font-bold">Schauspieler</h2>
-        <Suspense>
-          <FilmCast id={id} />
-        </Suspense>
+        <div>
+          <h2 className="text-xl mb-2 font-bold">Schauspieler</h2>
+          <Suspense>
+            <FilmCast id={id} />
+          </Suspense>
+        </div>
+
+        {filmData.belongs_to_collection && (
+          <div>
+            <h2 className="text-xl mb-2 font-bold">
+              {filmData.belongs_to_collection.name}
+            </h2>
+            <Suspense>
+              <FilmCollection id={filmData.belongs_to_collection.id + ""} />
+            </Suspense>
+          </div>
+        )}
       </ContentContainer>
     </>
   );
@@ -173,7 +191,7 @@ const FilmCast = async ({ id }: { id: string }) => {
 
   return (
     <>
-      <Carousel className="mx-12 lg:mx-0">
+      <Carousel className="mx-12 lg:mx-0" opts={{ slidesToScroll: "auto" }}>
         <CarouselContent>
           {castData.cast.map((person) => (
             <CarouselItem
@@ -181,6 +199,33 @@ const FilmCast = async ({ id }: { id: string }) => {
               key={person.cast_id}
             >
               <CastCard castMember={person} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </>
+  );
+};
+
+const FilmCollection = async ({ id }: { id: string }) => {
+  const collectionData = await getFilmCollectionData(id);
+
+  collectionData.parts.sort((a, b) => {
+    return a.release_date.localeCompare(b.release_date);
+  });
+
+  return (
+    <>
+      <Carousel className="mx-12 lg:mx-0" opts={{ slidesToScroll: "auto" }}>
+        <CarouselContent>
+          {collectionData.parts.map((movie) => (
+            <CarouselItem
+              className="basis-1/2 md:basis-1/4 lg:basis-1/4 "
+              key={movie.id}
+            >
+              <MovieCard movie={movie} />
             </CarouselItem>
           ))}
         </CarouselContent>

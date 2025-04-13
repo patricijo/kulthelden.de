@@ -34,7 +34,7 @@ export interface Movie {
   popularity: number;
   vote_count: number;
   video: boolean;
-  media_type: string;
+  media_type?: string;
 }
 
 export interface MovieDetails extends Movie {
@@ -101,4 +101,13 @@ export interface Person {
   credit_id: string;
   order: number;
   kult?: boolean;
+}
+
+export interface Collection {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  parts: Movie[];
 }
