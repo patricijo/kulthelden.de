@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/themeProvider";
-import { Navigation } from "@/components/Navigation";
+import { MobileMenuComponent, Navigation } from "@/components/Navigation";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +30,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navigation />
-          {children}
+          <SidebarProvider>
+            <main className="w-screen">
+              <Navigation />
+              {children}
+            </main>
+            <MobileMenuComponent />
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>
