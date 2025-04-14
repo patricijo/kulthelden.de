@@ -223,10 +223,11 @@ const FilmCast = async ({ id }: { id: string }) => {
 
   return (
     <>
-      <Carousel
-        className="mx-12 lg:mx-0 max-w-full"
-        opts={{ slidesToScroll: "auto" }}
-      >
+      <Carousel className="max-w-full w-full" opts={{ slidesToScroll: "auto" }}>
+        <div className="flex absolute -top-10 right-0 gap-2 overflow-hidden">
+          <CarouselPrevious className="relative top-auto left-auto -translate-0" />
+          <CarouselNext className="relative top-auto left-auto right-auto -translate-0" />
+        </div>
         <CarouselContent>
           {castData.cast.map((person) => (
             <CarouselItem
@@ -237,8 +238,6 @@ const FilmCast = async ({ id }: { id: string }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </>
   );
@@ -254,10 +253,11 @@ const FilmCollection = async ({ id }: { id: string }) => {
 
   return (
     <>
-      <Carousel
-        className="mx-12 lg:mx-0 max-w-full"
-        opts={{ slidesToScroll: "auto" }}
-      >
+      <Carousel opts={{ slidesToScroll: "auto" }} className="max-w-full w-full">
+        <div className="flex absolute -top-10 right-0 gap-2">
+          <CarouselPrevious className="relative top-auto left-auto -translate-0" />
+          <CarouselNext className="relative top-auto left-auto right-auto -translate-0" />
+        </div>
         <CarouselContent>
           {collectionData.parts.map((movie) => (
             <CarouselItem
@@ -268,8 +268,6 @@ const FilmCollection = async ({ id }: { id: string }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
       </Carousel>
     </>
   );
