@@ -7,7 +7,7 @@ import {
   MovieDetails,
   MovieVideosResponse,
 } from "@/lib/tmdbTypes";
-import { kultCast } from "./cast";
+import { kultCast } from "./kultschauspieler";
 
 export const getGenreData = async (id: string, page: number = 1) => {
   "use cache";
