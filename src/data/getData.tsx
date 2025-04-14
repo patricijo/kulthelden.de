@@ -7,6 +7,7 @@ import {
   MovieDetails,
   MovieVideosResponse,
 } from "@/lib/tmdbTypes";
+import { kultCast } from "./cast";
 
 export const getGenreData = async (id: string, page: number = 1) => {
   "use cache";
@@ -32,6 +33,20 @@ export const getFilmCastData = async (id: string) => {
   "use cache";
 
   const filmCastData = await tmdbFetch<MovieCredits>(`/movie/${id}/credits`);
+
+  // (kultCast) => kultCast.tmdbId === filmCastData.cast[0].id
+  // check iv every item in filmCastData.cast if its in kultCast if its in set filmCastData.cast[].kult to true
+
+  filmCastData.cast.forEach((castMember) => {
+    const kultCastMember = kultCast.find(
+      (kultCastMember) => kultCastMember.tmdbId === castMember.id
+    );
+    if (kultCastMember) {
+      castMember.kult = true;
+    }
+
+    return castMember;
+  });
 
   return filmCastData;
 };
