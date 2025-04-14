@@ -261,7 +261,7 @@ const FilmCollection = async ({ id }: { id: string }) => {
         <CarouselContent>
           {collectionData.parts.map((movie) => (
             <CarouselItem
-              className="basis-1/2 md:basis-1/4 lg:basis-1/4 pl-4"
+              className="basis-1/2 md:basis-1/4 lg:basis-1/4"
               key={movie.id}
             >
               <MovieCard movie={movie} />

@@ -19,7 +19,7 @@ export default async function MdPage({ params }: Props) {
 
 async function MdPageContent({ params }: Props) {
   const { md } = await params;
-  const markdownPath = `content/${md}.md`;
+  const markdownPath = `/content/${md}.md`;
   const content = fs.readFileSync(markdownPath, "utf8");
   return (
     <article className="prose dark:prose-invert max-w-full">
