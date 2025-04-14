@@ -27,6 +27,7 @@ import { kultGenres } from "@/data/kultGenres";
 
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import { Button } from "./ui/button";
 
 export const Navigation = () => {
   return (
@@ -53,10 +54,19 @@ const NavigationMenuComponent = () => {
     <NavigationMenu>
       <NavigationMenuList className="gap-4">
         <NavigationMenuItem>
-          <Link href="/kultschauspieler">Kult-Schaupieler</Link>
+          <Link href="/kultschauspieler">
+            <Button
+              className="bg-transparent shadow-none"
+              variant={"secondary"}
+            >
+              Kult-Schaupieler
+            </Button>
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Kult-Genres</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent">
+            Kult-Genres
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {kultGenres.map((genre) => {
@@ -82,7 +92,11 @@ const NavigationMenuComponent = () => {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <Link href="/kulthelden">Über Kulthelden</Link>
+        <Link href="/kulthelden">
+          <Button className="bg-transparent shadow-none" variant={"secondary"}>
+            Über Kulthelden
+          </Button>
+        </Link>
       </NavigationMenuList>
     </NavigationMenu>
   );
