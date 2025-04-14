@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { PaginationComponent } from "@/components/CustomUi/Pagination";
 import { getGenreData } from "@/data/getData";
+import { SkeletonCustom } from "@/components/CustomUi/SkeletonCustom";
 
 type Props = {
   params: Promise<{
@@ -10,9 +11,24 @@ type Props = {
   }>;
 };
 
+//const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default async function KultGenrePage({ params }: Props) {
   return (
-    <Suspense>
+    <Suspense
+      fallback={
+        <>
+          <SkeletonCustom
+            rows={4}
+            className="basis-1/2 md:basis-1/4 lg:basis-1/4 pr-4"
+          ></SkeletonCustom>
+          <SkeletonCustom
+            rows={4}
+            className="basis-1/2 md:basis-1/4 lg:basis-1/4 pr-4"
+          ></SkeletonCustom>
+        </>
+      }
+    >
       <KultGenrePageContent params={params} />
     </Suspense>
   );
@@ -25,6 +41,7 @@ export const KultGenrePageContent = async ({
 }) => {
   const id = (await params).id.split("_")[0];
 
+  //await delay(5000);
   const pageParam = (await params).page;
   const page = pageParam ? parseInt(pageParam, 10) : 1;
 
@@ -34,7 +51,7 @@ export const KultGenrePageContent = async ({
     <>
       {genreData.results.length > 0 && (
         <>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-8 mt-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-8">
             {genreData.results.map((movie) => (
               <MovieCard movie={movie} key={movie.id} />
             ))}
