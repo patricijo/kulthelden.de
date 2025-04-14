@@ -1,5 +1,4 @@
-"use server";
-
+import "server-only";
 import { tmdbFetch } from "@/lib/tmdb";
 import {
   Collection,

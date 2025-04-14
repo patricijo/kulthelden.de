@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_BASE_URL_v4 = "https://api.themoviedb.org/4";
