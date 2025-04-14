@@ -4,6 +4,7 @@ import {
   getFilmCastData,
   getFilmCollectionData,
   getFilmData,
+  getFilmTrailerData,
 } from "@/data/getData";
 import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
@@ -19,6 +20,7 @@ import {
 import { CastCard } from "@/components/CustomUi/CastCard";
 import { Metadata } from "next";
 import { MovieCard } from "@/components/CustomUi/MovieCard";
+import { TrailerDialog } from "@/components/TrailerDialog";
 
 type Props = {
   params: Promise<{
@@ -125,6 +127,9 @@ const FilmPageContent = async ({ params }: Props) => {
                 className="object-cover w-full h-full"
               />
             </div>
+            <Suspense>
+              <FilmTrailer id={id} />
+            </Suspense>
           </div>
           <div className="flex-2/3 space-y-4">
             <h1 className="text-2xl md:text-4xl font-bold">
@@ -232,6 +237,26 @@ const FilmCollection = async ({ id }: { id: string }) => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+    </>
+  );
+};
+
+const FilmTrailer = async ({ id }: { id: string }) => {
+  const trailerData = await getFilmTrailerData(id);
+
+  return (
+    <>
+      {trailerData.results.some(
+        (video) => video.type.toLowerCase() === "trailer"
+      ) && (
+        <TrailerDialog
+          trailerKey={
+            trailerData.results.find(
+              (video) => video.type.toLowerCase() === "trailer"
+            )?.key
+          }
+        />
+      )}
     </>
   );
 };

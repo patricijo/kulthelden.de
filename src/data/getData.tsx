@@ -6,6 +6,7 @@ import {
   ListResponse,
   MovieCredits,
   MovieDetails,
+  MovieVideosResponse,
 } from "@/lib/tmdbTypes";
 
 export const getGenreData = async (id: string, page: number = 1) => {
@@ -42,4 +43,14 @@ export const getFilmCollectionData = async (id: string) => {
   const filmCollectionData = await tmdbFetch<Collection>(`/collection/${id}`);
 
   return filmCollectionData;
+};
+
+export const getFilmTrailerData = async (id: string) => {
+  "use cache";
+
+  const filmTrailerData = await tmdbFetch<MovieVideosResponse>(
+    `/movie/${id}/videos`
+  );
+
+  return filmTrailerData;
 };
