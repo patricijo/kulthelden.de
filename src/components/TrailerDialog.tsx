@@ -25,9 +25,9 @@ export function TrailerDialog({ trailerKey }: TrailerDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2 w-full mt-2">
+        <Button className="gap-2 w-full mt-2 cursor-pointer">
           <Play className="h-4 w-4" />
-          <span>Watch Trailer</span>
+          <span>Trailer Anschauen</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="p-0 overflow-hidden w-[calc(100%-6rem)] sm:max-w-5xl ">

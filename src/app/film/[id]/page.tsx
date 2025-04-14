@@ -9,7 +9,7 @@ import {
 import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
 import Image from "next/image";
-import { Clock, Star } from "lucide-react";
+import { Clock, Play, Star } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -22,11 +22,16 @@ import { Metadata } from "next";
 import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { TrailerDialog } from "@/components/TrailerDialog";
 
+import { SkeletonCustom } from "@/components/CustomUi/SkeletonCustom";
+import { Button } from "@/components/ui/button";
+
 type Props = {
   params: Promise<{
     id: string;
   }>;
 };
+
+//const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -127,7 +132,14 @@ const FilmPageContent = async ({ params }: Props) => {
                 className="object-cover w-full h-full"
               />
             </div>
-            <Suspense>
+            <Suspense
+              fallback={
+                <Button className="gap-2 w-full mt-2" disabled>
+                  <Play className="h-4 w-4" />
+                  <span>Lade Trailer...</span>
+                </Button>
+              }
+            >
               <FilmTrailer id={id} />
             </Suspense>
           </div>
@@ -171,7 +183,14 @@ const FilmPageContent = async ({ params }: Props) => {
         </p>
         <div>
           <h2 className="text-xl mb-2 font-bold">Schauspieler</h2>
-          <Suspense>
+          <Suspense
+            fallback={
+              <SkeletonCustom
+                rows={7}
+                className="basis-1/1 md:basis-1/3 lg:basis-1/7 pr-4"
+              />
+            }
+          >
             <FilmCast id={id} />
           </Suspense>
         </div>
@@ -181,7 +200,14 @@ const FilmPageContent = async ({ params }: Props) => {
             <h2 className="text-xl mb-2 font-bold">
               {filmData.belongs_to_collection.name}
             </h2>
-            <Suspense>
+            <Suspense
+              fallback={
+                <SkeletonCustom
+                  rows={7}
+                  className="basis-1/2 md:basis-1/4 lg:basis-1/4 pr-4"
+                />
+              }
+            >
               <FilmCollection id={filmData.belongs_to_collection.id + ""} />
             </Suspense>
           </div>
@@ -193,10 +219,14 @@ const FilmPageContent = async ({ params }: Props) => {
 
 const FilmCast = async ({ id }: { id: string }) => {
   const castData = await getFilmCastData(id);
+  //await delay(5000);
 
   return (
     <>
-      <Carousel className="mx-12 lg:mx-0" opts={{ slidesToScroll: "auto" }}>
+      <Carousel
+        className="mx-12 lg:mx-0 max-w-full"
+        opts={{ slidesToScroll: "auto" }}
+      >
         <CarouselContent>
           {castData.cast.map((person) => (
             <CarouselItem
@@ -216,6 +246,7 @@ const FilmCast = async ({ id }: { id: string }) => {
 
 const FilmCollection = async ({ id }: { id: string }) => {
   const collectionData = await getFilmCollectionData(id);
+  //await delay(5000);
 
   collectionData.parts.sort((a, b) => {
     return a.release_date.localeCompare(b.release_date);
@@ -223,11 +254,14 @@ const FilmCollection = async ({ id }: { id: string }) => {
 
   return (
     <>
-      <Carousel className="mx-12 lg:mx-0" opts={{ slidesToScroll: "auto" }}>
+      <Carousel
+        className="mx-12 lg:mx-0 max-w-full"
+        opts={{ slidesToScroll: "auto" }}
+      >
         <CarouselContent>
           {collectionData.parts.map((movie) => (
             <CarouselItem
-              className="basis-1/2 md:basis-1/4 lg:basis-1/4 "
+              className="basis-1/2 md:basis-1/4 lg:basis-1/4 pl-4"
               key={movie.id}
             >
               <MovieCard movie={movie} />
@@ -243,6 +277,7 @@ const FilmCollection = async ({ id }: { id: string }) => {
 
 const FilmTrailer = async ({ id }: { id: string }) => {
   const trailerData = await getFilmTrailerData(id);
+  //await delay(5000);
 
   return (
     <>
