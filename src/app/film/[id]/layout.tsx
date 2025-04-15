@@ -9,8 +9,9 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const numericId = parseInt(id.split("_")[0], 10);
+  "use cache";
+  const id = (await params).id.split("_")[0];
+  const numericId = parseInt(id, 10);
 
   if (isNaN(numericId)) {
     return {
@@ -31,11 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: `${filmData.title} (${
-        filmData.release_date
-          ? new Date(filmData.release_date).getFullYear()
-          : "Unknown"
-      }) | KultHelden.de`,
+      title: `${filmData.title} | KultHelden.de`,
       description: description,
       openGraph: {
         title: filmData.title,
