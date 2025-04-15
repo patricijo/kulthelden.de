@@ -1,7 +1,6 @@
 import ReactMarkdown from "react-markdown";
 
 import fs from "fs";
-import { Suspense } from "react";
 import path from "path";
 import { Metadata } from "next";
 
@@ -26,15 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function MdPage({ params }: Props) {
-  return (
-    <Suspense>
-      <MdPageContent params={params} />
-    </Suspense>
-  );
+  return <MdPageContent params={params} />;
 }
 
 async function MdPageContent({ params }: Props) {
   const { md } = await params;
+
   const markdownPath = path.join(process.cwd(), "content", `${md}.md`);
   const content = fs.readFileSync(markdownPath, "utf8");
   return (
