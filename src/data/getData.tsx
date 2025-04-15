@@ -6,6 +6,7 @@ import {
   MovieCredits,
   MovieDetails,
   MovieVideosResponse,
+  PersonDetails,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
 
@@ -67,4 +68,47 @@ export const getFilmTrailerData = async (id: number) => {
   );
 
   return filmTrailerData;
+};
+
+export const getKultSchauspielerData = async (page: number) => {
+  "use cache";
+
+  const kultSchauspielerData = kultCast.slice((page - 1) * 20, page * 20);
+
+  const kultschauspieler = await Promise.all(
+    kultSchauspielerData.map(async (person) => {
+      const personData = await getPersonData(person.tmdbId);
+      return personData;
+    })
+  );
+
+  const response = {
+    totalItems: kultCast.length,
+    page: page,
+    results: kultschauspieler,
+  };
+
+  return response;
+};
+
+export const getPersonData = async (id: number) => {
+  "use cache";
+
+  const personData = await tmdbFetch<PersonDetails>(`/person/${id}`);
+  return personData;
+};
+
+export const getRandomKultschauspieler = async (number: number) => {
+  "use cache";
+
+  const randomCast = kultCast.sort(() => Math.random() - 0.5).slice(0, number);
+
+  const randomKultschauspieler = await Promise.all(
+    randomCast.map(async (person) => {
+      const personData = await getPersonData(person.tmdbId);
+      return personData;
+    })
+  );
+
+  return randomKultschauspieler;
 };

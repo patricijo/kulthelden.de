@@ -1,13 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Person } from "@/lib/tmdbTypes";
+import { Person, PersonDetails } from "@/lib/tmdbTypes";
 
 interface CastCardProps {
-  castMember: Person;
+  castMember: Person | PersonDetails;
   imageSize?: string;
+  noName?: boolean;
 }
 
-export function CastCard({ castMember, imageSize = "w300" }: CastCardProps) {
+export function CastCard({
+  castMember,
+  imageSize = "w300",
+  noName,
+}: CastCardProps) {
   const imageBaseUrl = "https://image.tmdb.org/t/p/";
   const profileUrl = castMember.profile_path
     ? `${imageBaseUrl}${imageSize}${castMember.profile_path}`
@@ -46,12 +51,14 @@ export function CastCard({ castMember, imageSize = "w300" }: CastCardProps) {
             </div>
           )}
         </div>
-        <div className="mt-2">
-          <h3 className="font-medium text-sm">{castMember.name}</h3>
-          <p className="text-sm text-muted-foreground">
-            {"character" in castMember ? castMember.character : ""}
-          </p>
-        </div>
+        {!noName && (
+          <div className="mt-2">
+            <h3 className="font-medium text-sm">{castMember.name}</h3>
+            <p className="text-sm text-muted-foreground">
+              {"character" in castMember ? castMember.character : ""}
+            </p>
+          </div>
+        )}
       </Link>
     </>
   );
