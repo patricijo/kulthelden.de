@@ -19,17 +19,15 @@ const KultGenrePageContent = async ({
 }: {
   params: Props["params"];
 }) => {
-  const id = (await params).id.split("_")[0];
-  const numericId = parseInt(id, 10);
+  const { id, page } = await params;
+  const numericId = parseInt(id.split("_")[0], 10);
+  const numericPage = page ? parseInt(page, 10) : 1;
 
   if (isNaN(numericId)) {
     return notFound();
   }
 
-  const pageParam = (await params).page;
-  const page = pageParam ? parseInt(pageParam, 10) : 1;
-
-  const genreData = await getGenreData(numericId, page);
+  const genreData = await getGenreData(numericId, numericPage);
 
   return (
     <>
@@ -46,7 +44,7 @@ const KultGenrePageContent = async ({
 
           <PaginationComponent
             href={`/kultgenre/${id}/`}
-            pageNumber={page}
+            pageNumber={numericPage}
             totalPages={genreData.total_pages}
           />
         </>
