@@ -14,7 +14,7 @@ export default async function KultGenrePage({ params }: Props) {
   return <KultGenrePageContent params={params} />;
 }
 
-export const KultGenrePageContent = async ({
+const KultGenrePageContent = async ({
   params,
 }: {
   params: Props["params"];

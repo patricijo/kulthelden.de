@@ -1,4 +1,4 @@
-import { KultGenrePageContent } from "./[page]/page";
+import KultGenrePage from "./[page]/page";
 
 type Props = {
   params: Promise<{
@@ -6,6 +6,6 @@ type Props = {
   }>;
 };
 
-export default async function KultGenrePage({ params }: Props) {
-  return <KultGenrePageContent params={params} />;
+export default async function KultGenrePageBase({ params }: Props) {
+  return <KultGenrePage params={params} />;
 }

@@ -12,7 +12,7 @@ export default async function KultSchauspielerPage({ params }: Props) {
   return <KultSchauspielerPageContent params={params} />;
 }
 
-export const KultSchauspielerPageContent = async ({ params }: Props) => {
+const KultSchauspielerPageContent = async ({ params }: Props) => {
   const page = (await params).page || "1";
   const numericPage = parseInt(page, 10);
 
