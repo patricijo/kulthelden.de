@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   try {
-    const genreData = await getGenreData(id);
+    const genreData = await getGenreData(numericId);
 
     return {
       title: `${genreData.name} | KultHelden.de`,
@@ -82,7 +82,13 @@ const KultGenreContent = async ({
 }) => {
   const id = (await params).id.split("_")[0];
 
-  const genreData = await getGenreData(id);
+  const numericId = parseInt(id, 10);
+
+  if (isNaN(numericId)) {
+    notFound();
+  }
+
+  const genreData = await getGenreData(numericId);
 
   if (genreData.results.length === 0) {
     notFound();

@@ -2,7 +2,7 @@ export interface ListResponse {
   created_by: string;
   description: string;
   favorite_count: number;
-  id: string;
+  id: number;
   results: Movie[];
   total_results: number;
   page: number;
@@ -117,7 +117,7 @@ export interface MovieVideosResponse {
   results: Video[];
 }
 export interface Video {
-  id: string;
+  id: number;
   iso_639_1: string;
   iso_3166_1: string;
   key: string;

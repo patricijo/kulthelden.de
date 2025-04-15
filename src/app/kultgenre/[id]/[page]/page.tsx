@@ -41,11 +41,10 @@ export const KultGenrePageContent = async ({
 }) => {
   const id = (await params).id.split("_")[0];
 
-  //await delay(5000);
   const pageParam = (await params).page;
   const page = pageParam ? parseInt(pageParam, 10) : 1;
 
-  const genreData = await getGenreData(id, page);
+  const genreData = await getGenreData(numericId, page);
 
   return (
     <>

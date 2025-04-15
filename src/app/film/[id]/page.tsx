@@ -31,8 +31,6 @@ type Props = {
   }>;
 };
 
-//const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const numericId = parseInt(id, 10);
@@ -45,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   try {
-    const filmData = await getFilmData(id);
+    const filmData = await getFilmData(numericId);
 
     return {
       title: `${filmData.title} (${
@@ -92,8 +90,16 @@ export default async function FilmPage({ params }: Props) {
 
 const FilmPageContent = async ({ params }: Props) => {
   const id = (await params).id.split("_")[0];
+  const numericId = parseInt(id, 10);
 
-  const filmData = await getFilmData(id);
+  if (isNaN(numericId)) {
+    return <div>Film nicht gefunden</div>;
+  }
+
+  //wait for 5 seconds  (1 liner without function call
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  const filmData = await getFilmData(numericId);
 
   const imageBaseUrl = "https://image.tmdb.org/t/p/";
 
@@ -140,7 +146,7 @@ const FilmPageContent = async ({ params }: Props) => {
                 </Button>
               }
             >
-              <FilmTrailer id={id} />
+              <FilmTrailer id={filmData.id} />
             </Suspense>
           </div>
           <div className="flex-2/3 space-y-4">
@@ -191,7 +197,7 @@ const FilmPageContent = async ({ params }: Props) => {
               />
             }
           >
-            <FilmCast id={id} />
+            <FilmCast id={numericId} />
           </Suspense>
         </div>
 
@@ -208,7 +214,7 @@ const FilmPageContent = async ({ params }: Props) => {
                 />
               }
             >
-              <FilmCollection id={filmData.belongs_to_collection.id + ""} />
+              <FilmCollection id={filmData.belongs_to_collection.id} />
             </Suspense>
           </div>
         )}
@@ -217,7 +223,7 @@ const FilmPageContent = async ({ params }: Props) => {
   );
 };
 
-const FilmCast = async ({ id }: { id: string }) => {
+const FilmCast = async ({ id }: { id: number }) => {
   const castData = await getFilmCastData(id);
   //await delay(5000);
 
@@ -243,7 +249,7 @@ const FilmCast = async ({ id }: { id: string }) => {
   );
 };
 
-const FilmCollection = async ({ id }: { id: string }) => {
+const FilmCollection = async ({ id }: { id: number }) => {
   const collectionData = await getFilmCollectionData(id);
   //await delay(5000);
 
@@ -273,7 +279,7 @@ const FilmCollection = async ({ id }: { id: string }) => {
   );
 };
 
-const FilmTrailer = async ({ id }: { id: string }) => {
+const FilmTrailer = async ({ id }: { id: number }) => {
   const trailerData = await getFilmTrailerData(id);
   //await delay(5000);
 

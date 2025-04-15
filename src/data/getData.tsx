@@ -9,7 +9,7 @@ import {
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
 
-export const getGenreData = async (id: string, page: number = 1) => {
+export const getGenreData = async (id: number, page: number = 1) => {
   "use cache";
 
   const genreData = await tmdbFetch<ListResponse>(
@@ -21,7 +21,7 @@ export const getGenreData = async (id: string, page: number = 1) => {
   return genreData;
 };
 
-export const getFilmData = async (id: string) => {
+export const getFilmData = async (id: number) => {
   "use cache";
 
   const filmData = await tmdbFetch<MovieDetails>(`/movie/${id}`);
@@ -29,7 +29,7 @@ export const getFilmData = async (id: string) => {
   return filmData;
 };
 
-export const getFilmCastData = async (id: string) => {
+export const getFilmCastData = async (id: number) => {
   "use cache";
 
   const filmCastData = await tmdbFetch<MovieCredits>(`/movie/${id}/credits`);
@@ -51,7 +51,7 @@ export const getFilmCastData = async (id: string) => {
   return filmCastData;
 };
 
-export const getFilmCollectionData = async (id: string) => {
+export const getFilmCollectionData = async (id: number) => {
   "use cache";
 
   const filmCollectionData = await tmdbFetch<Collection>(`/collection/${id}`);
@@ -59,7 +59,7 @@ export const getFilmCollectionData = async (id: string) => {
   return filmCollectionData;
 };
 
-export const getFilmTrailerData = async (id: string) => {
+export const getFilmTrailerData = async (id: number) => {
   "use cache";
 
   const filmTrailerData = await tmdbFetch<MovieVideosResponse>(
