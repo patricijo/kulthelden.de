@@ -3,12 +3,27 @@ import ReactMarkdown from "react-markdown";
 import fs from "fs";
 import { Suspense } from "react";
 import path from "path";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{
     md: string;
   }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { md } = await params;
+
+  const metadata: Metadata = {
+    title: `${md.charAt(0).toUpperCase() + md.slice(1)} | KultHelden.de`,
+  };
+
+  if (md === "impressum" || md === "datenschutz") {
+    metadata.robots = "noindex, nofollow";
+  }
+
+  return metadata;
+}
 
 export default async function MdPage({ params }: Props) {
   return (
