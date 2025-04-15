@@ -43,6 +43,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   try {
+    return {
+      title: "Film nicht gefunden | KultHelden.de",
+      description: "Der angeforderte Film wurde nicht gefunden.",
+    };
+
     const filmData = await getFilmData(numericId);
 
     return {
