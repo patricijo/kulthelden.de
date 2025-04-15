@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/themeProvider";
 import { MobileMenuComponent, Navigation } from "@/components/Navigation";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { Footer } from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,14 +33,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background scroll-smooth`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SidebarProvider>
             <main className="w-screen">
               <Navigation />
               {children}
+              <Footer />
             </main>
+
             <MobileMenuComponent />
           </SidebarProvider>
         </ThemeProvider>

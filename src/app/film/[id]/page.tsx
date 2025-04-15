@@ -81,11 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function FilmPage({ params }: Props) {
-  return (
-    <Suspense>
-      <FilmPageContent params={params} />
-    </Suspense>
-  );
+  return <FilmPageContent params={params} />;
 }
 
 const FilmPageContent = async ({ params }: Props) => {
@@ -131,7 +127,7 @@ const FilmPageContent = async ({ params }: Props) => {
           <div className="flex-1/3">
             <div className=" rounded-md overflow-hidden shadow-lg">
               <Image
-                src={posterUrl || "/placeholder.svg"}
+                src={posterUrl}
                 alt={`${filmData.title} poster`}
                 width={256}
                 height={384}
