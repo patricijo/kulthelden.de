@@ -92,9 +92,6 @@ const FilmPageContent = async ({ params }: Props) => {
     return <div>Film nicht gefunden</div>;
   }
 
-  //wait for 5 seconds  (1 liner without function call
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   const filmData = await getFilmData(numericId);
 
   const imageBaseUrl = "https://image.tmdb.org/t/p/";
