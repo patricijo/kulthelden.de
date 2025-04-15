@@ -54,7 +54,7 @@ const NavigationMenuComponent = () => {
     <NavigationMenu>
       <NavigationMenuList className="gap-4">
         <NavigationMenuItem>
-          <Link href="/kultschauspieler">
+          <Link href="/kultschauspieler#start">
             <Button
               className="bg-transparent shadow-none"
               variant={"secondary"}
@@ -94,7 +94,7 @@ const NavigationMenuComponent = () => {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <Link href="/kulthelden">
+        <Link href="/kulthelden#start">
           <Button className="bg-transparent shadow-none" variant={"secondary"}>
             Über Kulthelden
           </Button>

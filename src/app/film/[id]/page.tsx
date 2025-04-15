@@ -52,11 +52,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           : "Unknown"
       }) | KultHelden.de`,
       description:
-        filmData.overview || "Keine Beschreibung verfügbar für diesen Film.",
+        filmData.overview.substring(0, 160) +
+          (filmData.overview.length > 160 ? "..." : "") ||
+        "Keine Beschreibung verfügbar für diesen Film.",
       openGraph: {
         title: filmData.title,
         description:
-          filmData.overview || "Keine Beschreibung verfügbar für diesen Film.",
+          filmData.overview.substring(0, 160) +
+            (filmData.overview.length > 160 ? "..." : "") ||
+          "Keine Beschreibung verfügbar für diesen Film.",
         siteName: "Kulthelden.de",
         images: filmData.poster_path
           ? [

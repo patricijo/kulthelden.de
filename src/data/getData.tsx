@@ -9,6 +9,7 @@ import {
   PersonDetails,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
+import { unstable_cacheLife } from "next/cache";
 
 export const getGenreData = async (id: number, page: number = 1) => {
   "use cache";
@@ -101,6 +102,8 @@ export const getPersonData = async (id: number) => {
 export const getRandomKultschauspieler = async (number: number) => {
   "use cache";
 
+  unstable_cacheLife("days");
+
   const randomCast = kultCast.sort(() => Math.random() - 0.5).slice(0, number);
 
   const randomKultschauspieler = await Promise.all(
@@ -109,6 +112,5 @@ export const getRandomKultschauspieler = async (number: number) => {
       return personData;
     })
   );
-
   return randomKultschauspieler;
 };
