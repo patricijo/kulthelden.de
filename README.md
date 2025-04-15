@@ -1,24 +1,36 @@
-# Über uns – Kulthelden.de
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Willkommen bei **Kulthelden.de** – deiner ultimativen Anlaufstelle für alles rund um **Kultschauspieler**, legendäre **Filmklassiker** und ikonische **Genres**, die Filmgeschichte geschrieben haben.
+## Getting Started
 
-Wir feiern die Helden, die nicht nur Rollen spielten – sondern Geschichte. Von den coolen Rebellen der 80er bis zu den Sci-Fi-Legenden und Action-Ikonen der 90er – bei uns dreht sich alles um die Stars und Filme, die sich tief in unser kollektives Popkultur-Gedächtnis eingebrannt haben.
+First, run the development server:
 
-## Kultschauspieler im Fokus
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-Ob Bruce Campbell, Jean-Claude Van Damme oder die unvergessliche Sigourney Weaver – wir bringen dir spannende Hintergründe, Biografien, Interviews und Fun-Facts zu den Gesichtern, die Generationen geprägt haben.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Genres mit Seele
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Egal ob Trash-Perlen, Retro-Slasher, Space-Opera oder postapokalyptischer B-Movie – wir tauchen tief in die Welten ein, die heute Kultstatus genießen.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Unsere Mission
+## Learn More
 
-Kulthelden.de ist mehr als ein Blog – es ist ein digitales Denkmal für Filme, Serien und Persönlichkeiten, die zu Legenden wurden. Wir wollen diese Ikonen nicht nur ehren, sondern auch neuen Generationen näherbringen.
+To learn more about Next.js, take a look at the following resources:
 
-Ob du Fan der alten Schule bist oder gerade erst die Welt der Kultklassiker entdeckst – **Kulthelden.de** ist dein Ort zum Stöbern, Staunen und Nostalgieren.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
----
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-**Bereit für eine Reise zurück in die goldene Ära des Films?**  
-Dann schnall dich an – es wird kultig.
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
