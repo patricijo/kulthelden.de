@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         movie.release_date
           ? new Date(movie.release_date).getFullYear()
           : "Unknown"
-      }) | Movie Explorer`,
+      }) | Movie Exgbplorer`,
       description: movie.overview || "No overview available for this movie.",
       openGraph: {
         title: movie.title,
