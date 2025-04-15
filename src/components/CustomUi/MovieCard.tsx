@@ -23,6 +23,7 @@ export function MovieCard({ movie, imageSize = "w300" }: MovieCardProps) {
     .replace(/ß/g, "ss")
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-");
+
   return (
     <>
       <Link href={`/film/${movie.id}_${titleSlug}`} className="group">
