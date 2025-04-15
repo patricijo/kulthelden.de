@@ -9,7 +9,6 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  "use cache";
   const id = (await params).id.split("_")[0];
   const numericId = parseInt(id, 10);
 

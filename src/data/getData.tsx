@@ -9,11 +9,8 @@ import {
   PersonDetails,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
-import { unstable_cacheLife } from "next/cache";
 
 export const getGenreData = async (id: number, page: number = 1) => {
-  "use cache";
-
   const genreData = await tmdbFetch<ListResponse>(
     `/list/${id}?page=${page}`,
     {},
@@ -24,16 +21,12 @@ export const getGenreData = async (id: number, page: number = 1) => {
 };
 
 export const getFilmData = async (id: number) => {
-  "use cache";
-
   const filmData = await tmdbFetch<MovieDetails>(`/movie/${id}`);
 
   return filmData;
 };
 
 export const getFilmCastData = async (id: number) => {
-  "use cache";
-
   const filmCastData = await tmdbFetch<MovieCredits>(`/movie/${id}/credits`);
 
   // (kultCast) => kultCast.tmdbId === filmCastData.cast[0].id
@@ -54,16 +47,12 @@ export const getFilmCastData = async (id: number) => {
 };
 
 export const getFilmCollectionData = async (id: number) => {
-  "use cache";
-
   const filmCollectionData = await tmdbFetch<Collection>(`/collection/${id}`);
 
   return filmCollectionData;
 };
 
 export const getFilmTrailerData = async (id: number) => {
-  "use cache";
-
   const filmTrailerData = await tmdbFetch<MovieVideosResponse>(
     `/movie/${id}/videos`
   );
@@ -72,8 +61,6 @@ export const getFilmTrailerData = async (id: number) => {
 };
 
 export const getKultSchauspielerData = async (page: number) => {
-  "use cache";
-
   const kultSchauspielerData = kultCast.slice((page - 1) * 20, page * 20);
 
   const kultschauspieler = await Promise.all(
@@ -93,17 +80,11 @@ export const getKultSchauspielerData = async (page: number) => {
 };
 
 export const getPersonData = async (id: number) => {
-  "use cache";
-
   const personData = await tmdbFetch<PersonDetails>(`/person/${id}`);
   return personData;
 };
 
 export const getRandomKultschauspieler = async (number: number) => {
-  "use cache";
-
-  unstable_cacheLife("days");
-
   const randomCast = kultCast.sort(() => Math.random() - 0.5).slice(0, number);
 
   const randomKultschauspieler = await Promise.all(
