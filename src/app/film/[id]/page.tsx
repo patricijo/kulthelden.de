@@ -33,7 +33,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const numericId = parseInt(id, 10);
+  const numericId = parseInt(id.split("_")[0], 10);
 
   if (isNaN(numericId)) {
     return {
@@ -45,23 +45,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const filmData = await getFilmData(numericId);
 
+    let description = "Keine Beschreibung verfügbar für diesen Film.";
+    if (filmData.overview) {
+      description =
+        filmData.overview.length > 160
+          ? filmData.overview.substring(0, 157) + "..."
+          : filmData.overview;
+    }
+
     return {
       title: `${filmData.title} (${
         filmData.release_date
           ? new Date(filmData.release_date).getFullYear()
           : "Unknown"
       }) | KultHelden.de`,
-      description:
-        filmData.overview.substring(0, 160) +
-          (filmData.overview.length > 160 ? "..." : "") ||
-        "Keine Beschreibung verfügbar für diesen Film.",
+      description: description,
       openGraph: {
         title: filmData.title,
-        description:
-          filmData.overview.substring(0, 160) +
-            (filmData.overview.length > 160 ? "..." : "") ||
-          "Keine Beschreibung verfügbar für diesen Film.",
-        siteName: "Kulthelden.de",
+        description: description,
         images: filmData.poster_path
           ? [
               {
@@ -89,8 +90,8 @@ export default async function FilmPage({ params }: Props) {
 }
 
 const FilmPageContent = async ({ params }: Props) => {
-  const id = (await params).id.split("_")[0];
-  const numericId = parseInt(id, 10);
+  const { id } = await params;
+  const numericId = parseInt(id.split("_")[0], 10);
 
   if (isNaN(numericId)) {
     return <div>Film nicht gefunden</div>;
@@ -222,7 +223,6 @@ const FilmPageContent = async ({ params }: Props) => {
 
 const FilmCast = async ({ id }: { id: number }) => {
   const castData = await getFilmCastData(id);
-  //await delay(5000);
 
   return (
     <>
@@ -248,7 +248,6 @@ const FilmCast = async ({ id }: { id: number }) => {
 
 const FilmCollection = async ({ id }: { id: number }) => {
   const collectionData = await getFilmCollectionData(id);
-  //await delay(5000);
 
   collectionData.parts.sort((a, b) => {
     return a.release_date.localeCompare(b.release_date);
