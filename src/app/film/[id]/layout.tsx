@@ -29,12 +29,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ? filmData.overview.substring(0, 157) + "..."
           : filmData.overview;
     }
+    let formattedTitle = "KultHelden.de";
+
+    const releaseYear = filmData.release_date
+      ? new Date(filmData.release_date).getFullYear()
+      : null;
+    if (filmData.title) {
+      formattedTitle = releaseYear
+        ? `${filmData.title} (${releaseYear}) | KultHelden.de`
+        : `${filmData.title} | KultHelden.de`;
+    }
 
     return {
-      title: `${filmData.title} | KultHelden.de`,
+      title: formattedTitle,
       description: description,
       openGraph: {
-        title: filmData.title,
+        title: formattedTitle,
         description: description,
         images: filmData.poster_path
           ? [
@@ -42,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 url: `https://image.tmdb.org/t/p/w500${filmData.poster_path}`,
                 width: 500,
                 height: 750,
-                alt: `${filmData.title} poster`,
+                alt: `${formattedTitle} poster`,
               },
             ]
           : [],
