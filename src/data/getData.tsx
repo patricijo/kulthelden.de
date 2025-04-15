@@ -9,6 +9,7 @@ import {
   PersonDetails,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
+import { unstable_cache } from "next/cache";
 
 export const getGenreData = async (id: number, page: number = 1) => {
   const genreData = await tmdbFetch<ListResponse>(
@@ -20,11 +21,17 @@ export const getGenreData = async (id: number, page: number = 1) => {
   return genreData;
 };
 
-export const getFilmData = async (id: number) => {
-  const filmData = await tmdbFetch<MovieDetails>(`/movie/${id}`);
+export const getFilmData = unstable_cache(
+  async (id: number) => {
+    const filmData = await tmdbFetch<MovieDetails>(`/movie/${id}`);
 
-  return filmData;
-};
+    return filmData;
+  },
+  ["Film-cache"],
+  {
+    revalidate: 60 * 60 * 24 * 7, // 1 week
+  }
+);
 
 export const getFilmCastData = async (id: number) => {
   const filmCastData = await tmdbFetch<MovieCredits>(`/movie/${id}/credits`);
