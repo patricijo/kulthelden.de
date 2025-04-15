@@ -86,10 +86,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function FilmPage({ params }: Props) {
-  return <FilmPageContent params={params} />;
-}
-
-const FilmPageContent = async ({ params }: Props) => {
   const { id } = await params;
   const numericId = parseInt(id.split("_")[0], 10);
 
@@ -219,7 +215,9 @@ const FilmPageContent = async ({ params }: Props) => {
       </ContentContainer>
     </>
   );
-};
+}
+
+//const FilmPageContent = async ({ params }: Props) => {};
 
 const FilmCast = async ({ id }: { id: number }) => {
   const castData = await getFilmCastData(id);
