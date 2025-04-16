@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Movie Details | Movie Explorer",
+      title: "Movie Details | Movie jnExplorer",
       description: "View details about this movie.",
     };
   }
