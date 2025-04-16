@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Kulthelden.de ",
+  description: "Kulthelden.de",
   openGraph: {
     title: "Kulthelden.de",
     description: "Kulthelden.de",

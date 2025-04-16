@@ -17,10 +17,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${md.charAt(0).toUpperCase() + md.slice(1)} | KultHelden.de`,
   };
 
-  if (md === "impressum" || md === "datenschutz") {
-    metadata.robots = "noindex, nofollow";
-  }
-
   return metadata;
 }
 
