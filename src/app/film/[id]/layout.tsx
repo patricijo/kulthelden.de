@@ -58,6 +58,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function FilmLayout({ children }: Props) {
-  return <>{children}</>;
+export default async function FilmLayout({ params, children }: Props) {
+  const id = (await params).id.split("_")[0];
+  const numericId = parseInt(id, 10);
+
+  try {
+    const filmData = await getFilmData(numericId);
+
+    return (
+      <>
+        {filmData.title}
+        {children}
+      </>
+    );
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Film Details | KultHelden.de",
+      description: "Fehler beim Laden der Film-Details.",
+    };
+  }
 }
