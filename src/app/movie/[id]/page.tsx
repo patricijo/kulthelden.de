@@ -25,41 +25,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  try {
-    // Fetch movie data
-    const movie = await getFilmData(numericId);
+  // Fetch movie data
+  const movie = await getFilmData(numericId);
 
-    // Construct metadata
-    return {
-      title: `${movie.title} (${
-        movie.release_date
-          ? new Date(movie.release_date).getFullYear()
-          : "Unknown"
-      }) | Movie Explorer`,
+  // Construct metadata
+  return {
+    title: `${movie.title} (${
+      movie.release_date
+        ? new Date(movie.release_date).getFullYear()
+        : "Unknown"
+    }) | Movie Explorer`,
+    description: movie.overview || "No overview available for this movie.",
+    openGraph: {
+      title: movie.title,
       description: movie.overview || "No overview available for this movie.",
-      openGraph: {
-        title: movie.title,
-        description: movie.overview || "No overview available for this movie.",
-        images: movie.poster_path
-          ? [
-              {
-                url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-                width: 500,
-                height: 750,
-                alt: `${movie.title} poster`,
-              },
-            ]
-          : [],
-        type: "website",
-      },
-    };
-  } catch (error) {
-    console.error("Error generating metadata:", error);
-    return {
-      title: "Movie Details | Movie jnExplorer",
-      description: "View details about this movie.",
-    };
-  }
+      images: movie.poster_path
+        ? [
+            {
+              url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+              width: 500,
+              height: 750,
+              alt: `${movie.title} poster`,
+            },
+          ]
+        : [],
+      type: "website",
+    },
+  };
 }
 
 // Define the default function to fetch and display movie details
