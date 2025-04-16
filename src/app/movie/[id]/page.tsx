@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { fetchPopularMovies } from "@/services/tmdb";
 
 import { cachedQueryMovie } from "@/services/cachedData";
+import { getFilmData } from "@/data/getData";
 
 // Define the type for page props
 type Props = {
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   try {
     // Fetch movie data
-    const [movie] = await cachedQueryMovie(numericId);
+    const movie = await getFilmData(numericId);
 
     // Construct metadata
     return {
