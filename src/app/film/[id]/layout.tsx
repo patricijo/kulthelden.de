@@ -10,6 +10,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
+
   const numericId = parseInt(id.split("_")[0], 10);
 
   if (isNaN(numericId)) {
@@ -21,7 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   try {
     const filmData = await getFilmData(numericId);
-
     let description = "Keine Beschreibung verfügbar für diesen Film.";
     if (filmData.overview) {
       description =

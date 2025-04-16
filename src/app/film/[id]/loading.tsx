@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button";
 import { SkeletonCustom } from "@/components/CustomUi/SkeletonCustom";
 import { BackdropImage } from "@/components/CustomUi/BackdropImage";
 
+export const metadata = {
+  title: "Loading...",
+  description: "Page is loading",
+};
+
 export default function Loading() {
   return (
     <>

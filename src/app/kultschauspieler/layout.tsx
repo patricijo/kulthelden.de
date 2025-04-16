@@ -2,6 +2,7 @@ import { CastCard } from "@/components/CustomUi/CastCard";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getRandomKultschauspieler } from "@/data/getData";
+
 import { Suspense } from "react";
 
 type Props = {

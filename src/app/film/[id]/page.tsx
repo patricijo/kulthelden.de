@@ -34,7 +34,6 @@ type Props = {
 export default async function FilmPage({ params }: Props) {
   const { id } = await params;
   const numericId = parseInt(id.split("_")[0], 10);
-
   if (isNaN(numericId)) {
     return <div>Film nicht gefunden</div>;
   }
