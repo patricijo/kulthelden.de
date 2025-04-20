@@ -61,11 +61,15 @@ export const getFilmTrailerData = async (id: number) => {
 };
 
 export const getKultSchauspielerData = async (page: number) => {
-  const kultSchauspielerData = kultCast.slice((page - 1) * 20, page * 20);
+  const startIndex = (page - 1) * 20;
+  const endIndex = startIndex + 20;
+  const kultSchauspielerData = [...kultCast].slice(startIndex, endIndex);
 
   const kultschauspieler = await Promise.all(
     kultSchauspielerData.map(async (person) => {
       const personData = await getPersonData(person.tmdbId);
+      personData.kult = true;
+      personData.termId = person.termId;
       return personData;
     })
   );
@@ -85,7 +89,9 @@ export const getPersonData = async (id: number) => {
 };
 
 export const getRandomKultschauspieler = async (number: number) => {
-  const randomCast = kultCast.sort(() => Math.random() - 0.5).slice(0, number);
+  const randomCast = [...kultCast]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, number);
 
   const randomKultschauspieler = await Promise.all(
     randomCast.map(async (person) => {

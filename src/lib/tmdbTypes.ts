@@ -118,6 +118,7 @@ export interface PersonDetails {
   popularity: number;
   profile_path: string | null;
   kult?: boolean;
+  termId?: number;
 }
 
 export interface Collection {
