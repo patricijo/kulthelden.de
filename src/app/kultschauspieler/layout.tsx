@@ -40,6 +40,7 @@ const Spotlight = async () => {
     </>
   );
 };
+
 const SpotlightSkeleton = () => {
   return (
     <div className="flex gap-8">

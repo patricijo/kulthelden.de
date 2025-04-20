@@ -45,7 +45,7 @@ export default async function FilmPage({ params }: Props) {
 
   const posterUrl = filmData.poster_path
     ? `${imageBaseUrl}w500${filmData.poster_path}`
-    : "/placeholder-poster.jpg";
+    : null;
 
   const backdropUrl = filmData.backdrop_path
     ? `${imageBaseUrl}original${filmData.backdrop_path}`
@@ -70,13 +70,15 @@ export default async function FilmPage({ params }: Props) {
         <div className="flex gap-4 md:gap-8 items-center sm:items-start">
           <div className="flex-1/3">
             <div className=" rounded-md overflow-hidden shadow-lg">
-              <Image
-                src={posterUrl}
-                alt={`${filmData.title} poster`}
-                width={256}
-                height={384}
-                className="object-cover w-full h-full"
-              />
+              {posterUrl && (
+                <Image
+                  src={posterUrl}
+                  alt={`${filmData.title} poster`}
+                  width={256}
+                  height={384}
+                  className="object-cover w-full h-full"
+                />
+              )}
             </div>
             <Suspense
               fallback={

@@ -29,7 +29,10 @@ export function CastCard({
 
   return (
     <>
-      <Link href={`/cast/${castMember.id}_${castSlug}`} className="group">
+      <Link
+        href={`/schauspieler/${castMember.id}_${castSlug}`}
+        className="group"
+      >
         <div className="rounded-md overflow-hidden relative">
           {castMember.kult === true && (
             <div className="absolute top-2 right-2 z-10 bg-red-600 px-2 py-0.5 rounded text-white text-xs font-medium">
