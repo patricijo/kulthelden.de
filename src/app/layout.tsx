@@ -17,11 +17,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kulthelden.de ",
+  title: "Kulthelden.de - Deine Plattform für Kultfilme und Klassiker",
+  description:
+    "Entdecke die besten Kultfilme, Klassiker und Geheimtipps auf Kulthelden.de - Deine Quelle für filmische Schätze und Nostalgie.",
+  keywords: [
+    "Kultfilme",
+    "Filmklassiker",
+    "Filmarchiv",
+    "Nostalgie",
+    "Filmgeschichte",
+  ],
   openGraph: {
-    title: "Kulthelden.de",
-    description: "Kulthelden.de",
+    title: "Kulthelden.de - Deine Plattform für Kultfilme und Klassiker",
+    description:
+      "Entdecke die besten Kultfilme, Klassiker und Geheimtipps auf Kulthelden.de - Deine Quelle für filmische Schätze und Nostalgie.",
     siteName: "Kulthelden.de",
+    type: "website",
+    locale: "de_DE",
+    url: "https://kulthelden.de",
+    images: [
+      {
+        url: "/images/kulthelden-og-image.jpg", // TODO: Add OG Image
+        width: 1200,
+        height: 630,
+        alt: "Kulthelden.de Logo und Filmstreifen",
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 

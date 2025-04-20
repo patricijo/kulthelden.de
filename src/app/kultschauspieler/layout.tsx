@@ -15,9 +15,8 @@ export default async function KultSchauspielerLayout({ children }: Props) {
         <Suspense fallback={<SpotlightSkeleton />}>
           <Spotlight />
         </Suspense>
+        {children}
       </ContentContainer>
-
-      <div className="max-w-6xl mx-auto mt-8 p-4 md:p-0">{children}</div>
     </>
   );
 }
