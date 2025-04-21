@@ -35,6 +35,7 @@ export interface Movie {
   vote_count: number;
   video: boolean;
   media_type?: string;
+  character?: string;
 }
 
 export interface MovieDetails extends Movie {
@@ -97,7 +98,7 @@ export interface Person {
   popularity: number;
   profile_path: string | null;
   cast_id: number;
-  character: string;
+  character?: string;
   credit_id: string;
   order: number;
   kult?: boolean;
@@ -119,6 +120,12 @@ export interface PersonDetails {
   profile_path: string | null;
   kult?: boolean;
   termId?: number;
+}
+
+export interface PersonCredits {
+  id: number;
+  cast: Movie[];
+  crew: Movie[];
 }
 
 export interface Collection {

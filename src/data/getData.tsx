@@ -6,6 +6,7 @@ import {
   MovieCredits,
   MovieDetails,
   MovieVideosResponse,
+  PersonCredits,
   PersonDetails,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
@@ -100,4 +101,11 @@ export const getRandomKultschauspieler = async (number: number) => {
     })
   );
   return randomKultschauspieler;
+};
+
+export const getPersonCredits = async (id: number) => {
+  const personCreditsData = await tmdbFetch<PersonCredits>(
+    `/person/${id}/movie_credits`
+  );
+  return personCreditsData;
 };
