@@ -1,5 +1,6 @@
 import { CastCard } from "@/components/CustomUi/CastCard";
 import { ContentContainer } from "@/components/CustomUi/ContentContainer";
+import { ReadMore } from "@/components/CustomUi/ReadMore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getRandomKultschauspieler } from "@/data/getData";
 import { Suspense } from "react";
@@ -34,7 +35,9 @@ const Spotlight = async () => {
           <h2 className="text-2xl md:text-3xl font-bold">
             {randomSchauspieler[0].name}
           </h2>
-          {randomSchauspieler[0].biography}
+          <ReadMore maxLines={5} className="text-md max-w-2xl">
+            {randomSchauspieler[0].biography}
+          </ReadMore>
         </div>
       </div>
     </>
