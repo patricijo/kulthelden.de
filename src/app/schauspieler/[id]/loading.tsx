@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { CreditsSkeleton } from "./page";
+
+import { SkeletonCustom } from "@/components/CustomUi/SkeletonCustom";
 
 export default function Loading() {
   return (
@@ -68,3 +69,24 @@ export default function Loading() {
     </>
   );
 }
+
+
+export function CreditsSkeleton() {
+    return (
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <Skeleton className="h-6 w-1/3" />
+  
+          <SkeletonCustom
+            rows={4}
+            className="basis-1/2 md:basis-1/4 lg:basis-1/4 pr-4"
+          />
+        </div>
+  
+        <div className="space-y-4">
+          <Skeleton className="h-6 w-1/4" />
+          <Skeleton className="h-64 w-full rounded-md" />
+        </div>
+      </div>
+    );
+  }

@@ -5,8 +5,8 @@ import { getPersonCredits, getPersonData } from "@/data/getData";
 import Image from "next/image";
 import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { SkeletonCustom } from "@/components/CustomUi/SkeletonCustom";
+
+import { CreditsSkeleton } from "./loading";
 
 type Props = {
   params: Promise<{
@@ -150,23 +150,3 @@ const SchauspielerCredits = async ({ id }: { id: number }) => {
     </>
   );
 };
-
-export function CreditsSkeleton() {
-  return (
-    <div className="space-y-8">
-      <div className="space-y-4">
-        <Skeleton className="h-6 w-1/3" />
-
-        <SkeletonCustom
-          rows={4}
-          className="basis-1/2 md:basis-1/4 lg:basis-1/4 pr-4"
-        />
-      </div>
-
-      <div className="space-y-4">
-        <Skeleton className="h-6 w-1/4" />
-        <Skeleton className="h-64 w-full rounded-md" />
-      </div>
-    </div>
-  );
-}
