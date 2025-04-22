@@ -40,13 +40,13 @@ export function MovieTable({ data }: { data: Movie[] }) {
     <>
       {allMovies.length > 12 && (
         <div>
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-800">
+          <div className="bg-card rounded-lg shadow-lg overflow-hidden border">
+            <table className="min-w-full divide-y divide-border">
+              <thead className="bg-muted/50">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                    className="px-4 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider" // Updated: Use text-muted-foreground
                   >
                     <button
                       className="flex items-center gap-2 cursor-pointer"
@@ -57,7 +57,7 @@ export function MovieTable({ data }: { data: Movie[] }) {
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                    className="px-4 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider" // Updated: Use text-muted-foreground
                   >
                     <button
                       className="flex items-center gap-2  cursor-pointer"
@@ -68,13 +68,13 @@ export function MovieTable({ data }: { data: Movie[] }) {
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                    className="px-4 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider" // Updated: Use text-muted-foreground
                   >
                     Rolle
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                    className="px-4 py-4 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider" // Updated: Use text-muted-foreground
                     onClick={() => setSortBy("rating")}
                   >
                     <button
@@ -86,18 +86,18 @@ export function MovieTable({ data }: { data: Movie[] }) {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="bg-card divide-y divide-border">
                 {allMovies.map((movie) => (
                   <tr
                     key={movie.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="hover:bg-muted/50" // Updated: Use hover:bg-muted/50
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">
                       {movie.release_date
                         ? new Date(movie.release_date).getFullYear()
                         : ""}
                     </td>
-                    <td className="px-6 py-4 ">
+                    <td className="px-4 py-4 ">
                       <Link
                         href={`/film/${movie.id}_${movie.title
                           .toLowerCase()
@@ -107,17 +107,17 @@ export function MovieTable({ data }: { data: Movie[] }) {
                           .replace(/ß/g, "ss")
                           .replace(/[^\w\s-]/g, "")
                           .replace(/\s+/g, "-")}`}
-                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                        className="text-primary hover:underline" // Updated: Use text-primary
                       >
                         {movie.title}
                       </Link>
                     </td>
-                    <td className="px-6 py-4  text-sm text-gray-500 dark:text-gray-400">
+                    <td className="px-4 py-4  text-sm text-muted-foreground">
                       {movie.character || ""}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
                       <span className="flex items-center  justify-end">
-                        <span className="text-yellow-400 mr-1">★</span>
+                        <span className="text-yellow-400 mr-1">★</span>{" "}
                         {movie.vote_average.toFixed(1)}
                       </span>
                     </td>

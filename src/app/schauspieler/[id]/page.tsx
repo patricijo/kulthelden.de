@@ -4,6 +4,9 @@ import { getPersonCredits, getPersonData } from "@/data/getData";
 
 import Image from "next/image";
 import { MovieCard } from "@/components/CustomUi/MovieCard";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonCustom } from "@/components/CustomUi/SkeletonCustom";
 
 type Props = {
   params: Promise<{
@@ -52,8 +55,8 @@ export default async function SchauspielerPage({ params }: Props) {
     <>
       <div className="flex gap-4 md:gap-8 items-center sm:items-start">
         <div className="flex-1/3">
-          <div className=" rounded-md overflow-hidden shadow-lg">
-            {profileUrl && (
+          <div className=" rounded-md overflow-hidden shadow-lg bg-accent">
+            {profileUrl ? (
               <Image
                 src={profileUrl}
                 alt={`${schauspielerData.name} poster`}
@@ -61,6 +64,10 @@ export default async function SchauspielerPage({ params }: Props) {
                 height={384}
                 className="object-cover w-full h-full"
               />
+            ) : (
+              <div className="aspect-[2/3] items-center flex justify-center text-center ">
+                Kein Bild vorhanden
+              </div>
             )}
           </div>
         </div>
@@ -111,7 +118,9 @@ export default async function SchauspielerPage({ params }: Props) {
           {schauspielerData.biography}
         </ReadMore>
       </div>
-      <SchauspielerCredits id={numericId} />
+      <Suspense fallback={<CreditsSkeleton />}>
+        <SchauspielerCredits id={numericId} />
+      </Suspense>
     </>
   );
 }
@@ -120,13 +129,13 @@ const SchauspielerCredits = async ({ id }: { id: number }) => {
   const credits = await getPersonCredits(id);
 
   const bestMovies = [...credits.cast]
-    .sort((a, b) => b.vote_average - a.vote_average)
+    .sort((a, b) => b.popularity - a.popularity)
     .slice(0, 4);
 
   return (
     <>
-      <div>
-        <h1 className="text-md md:text-xl font-bold mb-4">Die besten Filme</h1>
+      <div className=" space-y-2">
+        <h1 className="text-md md:text-xl font-bold">Die beliebtesten Filme</h1>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
           {bestMovies.length > 0 &&
             bestMovies.map((movie) => {
@@ -134,10 +143,30 @@ const SchauspielerCredits = async ({ id }: { id: number }) => {
             })}
         </div>
       </div>
-      <div>
-        <h1 className="text-md md:text-xl font-bold mb-4">Alle Filme</h1>
+      <div className="space-y-2">
+        <h1 className="text-md md:text-xl font-bold">Alle Filme</h1>
         <MovieTable data={credits.cast} />
       </div>
     </>
   );
 };
+
+export function CreditsSkeleton() {
+  return (
+    <div className="space-y-8">
+      <div className="space-y-4">
+        <Skeleton className="h-6 w-1/3" />
+
+        <SkeletonCustom
+          rows={4}
+          className="basis-1/2 md:basis-1/4 lg:basis-1/4 pr-4"
+        />
+      </div>
+
+      <div className="space-y-4">
+        <Skeleton className="h-6 w-1/4" />
+        <Skeleton className="h-64 w-full rounded-md" />
+      </div>
+    </div>
+  );
+}
