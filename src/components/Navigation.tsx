@@ -34,8 +34,8 @@ export const Navigation = () => {
     <header className="border-b bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto flex h-16 items-center gap-4 p-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-          <h2 className="text-amber-600 dark:text-white text-3xl font-bold italic ">
-            KULT<span className="not-italic text-gray-950">HELDEN</span>
+          <h2 className="text-amber-600 text-3xl font-bold italic ">
+            KULT<span className="not-italic text-foreground">HELDEN</span>
           </h2>
         </Link>
 
