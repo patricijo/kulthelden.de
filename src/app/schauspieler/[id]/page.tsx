@@ -7,6 +7,7 @@ import { MovieCard } from "@/components/CustomUi/MovieCard";
 import { Suspense } from "react";
 
 import { CreditsSkeleton } from "./loading";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{
@@ -14,16 +15,60 @@ type Props = {
   }>;
 };
 
+const imageBaseUrl = "https://image.tmdb.org/t/p/";
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const numericId = parseInt(id.split("_")[0], 10);
+
+  if (isNaN(numericId)) {
+    return {
+      title: "Schauspieler nicht gefunden | KultHelden.de",
+      description: "Der angeforderte Schauspieler wurde nicht gefunden.",
+    };
+  }
+
+  try {
+    const schauspielerData = await getPersonData(numericId);
+
+    return {
+      title: `${schauspielerData.name} | KultHelden.de`,
+      description: `Informationen über ${schauspielerData.name}, bekannt für ${schauspielerData.known_for_department}. Biografie und Filmografie.`,
+      openGraph: {
+        title: `${schauspielerData.name} | KultHelden.de`,
+        description: `Informationen über ${schauspielerData.name}, bekannt für ${schauspielerData.known_for_department}. Biografie und Filmografie.`,
+        siteName: "KultHelden.de",
+        images: schauspielerData.profile_path
+          ? [
+              {
+                url: `${imageBaseUrl}original${schauspielerData.profile_path}`,
+                width: 500,
+                height: 300,
+                alt: `${schauspielerData.name} Poster`,
+              },
+            ]
+          : [],
+        type: "website",
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Schauspieler Details | KultHelden.de",
+      description: "Fehler beim Laden der Schauspieler-Details.",
+    };
+  }
+}
+
 export default async function SchauspielerPage({ params }: Props) {
   const { id } = await params;
   const numericId = parseInt(id.split("_")[0], 10);
 
   if (isNaN(numericId)) {
-    return <div>Film nicht gefunden</div>;
+    return <div>Schauspieler nicht gefunden</div>;
   }
 
   const schauspielerData = await getPersonData(numericId);
-  const imageBaseUrl = "https://image.tmdb.org/t/p/";
   const profileUrl = schauspielerData.profile_path
     ? `${imageBaseUrl}w300${schauspielerData.profile_path}`
     : null;
