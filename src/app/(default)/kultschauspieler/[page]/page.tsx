@@ -1,26 +1,53 @@
 import { CastCard } from "@/components/CustomUi/CastCard";
-import { ContentContainer } from "@/components/CustomUi/ContentContainer";
+import { PaginationComponent } from "@/components/CustomUi/Pagination";
 import { ReadMore } from "@/components/CustomUi/ReadMore";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getRandomKultschauspieler } from "@/data/getData";
+import {
+  getKultSchauspielerData,
+  getRandomKultschauspieler,
+} from "@/data/getData";
 import { Suspense } from "react";
 
 type Props = {
-  children: React.ReactNode;
+  params: Promise<{
+    page?: string;
+  }>;
 };
 
-export default async function KultSchauspielerLayout({ children }: Props) {
+export default async function KultSchauspielerPage({ params }: Props) {
+  return <KultSchauspielerPageContent params={params} />;
+}
+
+const KultSchauspielerPageContent = async ({ params }: Props) => {
+  const page = (await params).page || "1";
+  const numericPage = parseInt(page, 10);
+
+  const kultSchauspielerData = await getKultSchauspielerData(numericPage);
+
   return (
     <>
-      <ContentContainer className="md:mt-32 pt-16 md:pt-8">
-        <Suspense fallback={<SpotlightSkeleton />}>
-          <Spotlight />
-        </Suspense>
-        {children}
-      </ContentContainer>
+      <Suspense fallback={<SpotlightSkeleton />}>
+        <Spotlight />
+      </Suspense>
+
+      {kultSchauspielerData.results.length > 0 && (
+        <>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 ">
+            {kultSchauspielerData.results.map((person) => {
+              return <CastCard castMember={person} key={person.id} />;
+            })}
+          </div>
+
+          <PaginationComponent
+            href={`/kultschauspieler/`}
+            pageNumber={numericPage}
+            totalPages={Math.ceil(kultSchauspielerData.totalItems / 20)}
+          />
+        </>
+      )}
     </>
   );
-}
+};
 
 const Spotlight = async () => {
   const randomSchauspieler = await getRandomKultschauspieler(1);
