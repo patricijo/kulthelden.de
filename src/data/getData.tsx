@@ -8,6 +8,8 @@ import {
   MovieVideosResponse,
   PersonCredits,
   PersonDetails,
+  SearchMovieResponse,
+  SearchPersonResponse,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
 
@@ -108,4 +110,18 @@ export const getPersonCredits = async (id: number) => {
     `/person/${id}/movie_credits`
   );
   return personCreditsData;
+};
+
+export const searchMovie = async (query: string, page: number = 1) => {
+  const searchResultData = await tmdbFetch<SearchMovieResponse>(
+    `/search/movie?query=${encodeURIComponent(query)}&page=${page}`
+  );
+  return searchResultData;
+};
+
+export const searchPerson = async (query: string, page: number = 1) => {
+  const searchResultData = await tmdbFetch<SearchPersonResponse>(
+    `/search/person?query=${encodeURIComponent(query)}&page=${page}`
+  );
+  return searchResultData;
 };

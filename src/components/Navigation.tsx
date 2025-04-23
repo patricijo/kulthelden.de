@@ -28,6 +28,7 @@ import { kultGenres } from "@/data/kultGenres";
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
 import { Button } from "./ui/button";
+import { SearchBar } from "./SearchBar";
 
 export const Navigation = () => {
   return (
@@ -53,6 +54,7 @@ const NavigationMenuComponent = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList className="gap-4">
+        <SearchBar />
         <NavigationMenuItem>
           <Link href="/kultschauspieler#start">
             <Button

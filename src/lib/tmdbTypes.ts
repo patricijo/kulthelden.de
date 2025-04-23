@@ -153,3 +153,17 @@ export interface Video {
   official: boolean;
   published_at: string;
 }
+
+export interface SearchMovieResponse {
+  page: number;
+  results: Movie[];
+  total_results: number;
+  total_pages: number;
+}
+
+export interface SearchPersonResponse {
+  page: number;
+  results: Person[];
+  total_results: number;
+  total_pages: number;
+}
