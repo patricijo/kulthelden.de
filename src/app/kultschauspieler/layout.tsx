@@ -32,9 +32,12 @@ const Spotlight = async () => {
           <CastCard castMember={randomSchauspieler[0]} noName />
         </div>
         <div className="flex-3/4 flex flex-col gap-4">
-          <h2 className="text-2xl md:text-3xl font-bold">
-            {randomSchauspieler[0].name}
-          </h2>
+          <div>
+            <div className=" text-muted-foreground">Heute in Spotlight:</div>
+            <h2 className="text-2xl md:text-3xl font-bold">
+              {randomSchauspieler[0].name}
+            </h2>
+          </div>
           <ReadMore maxLines={5} className="text-md max-w-2xl">
             {randomSchauspieler[0].biography}
           </ReadMore>
