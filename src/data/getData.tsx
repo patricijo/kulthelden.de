@@ -12,8 +12,11 @@ import {
   SearchPersonResponse,
 } from "@/lib/tmdbTypes";
 import { kultCast } from "./kultschauspieler";
+import { unstable_cacheLife } from "next/cache";
 
 export const getGenreData = async (id: number, page: number = 1) => {
+  "use cache";
+  unstable_cacheLife("weeks");
   const genreData = await tmdbFetch<ListResponse>(
     `/list/${id}?page=${page}`,
     {},
@@ -24,12 +27,16 @@ export const getGenreData = async (id: number, page: number = 1) => {
 };
 
 export const getFilmData = async (id: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const filmData = await tmdbFetch<MovieDetails>(`/movie/${id}`);
 
   return filmData;
 };
 
 export const getFilmCastData = async (id: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const filmCastData = await tmdbFetch<MovieCredits>(`/movie/${id}/credits`);
 
   // (kultCast) => kultCast.tmdbId === filmCastData.cast[0].id
@@ -50,12 +57,16 @@ export const getFilmCastData = async (id: number) => {
 };
 
 export const getFilmCollectionData = async (id: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const filmCollectionData = await tmdbFetch<Collection>(`/collection/${id}`);
 
   return filmCollectionData;
 };
 
 export const getFilmTrailerData = async (id: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const filmTrailerData = await tmdbFetch<MovieVideosResponse>(
     `/movie/${id}/videos`
   );
@@ -64,6 +75,8 @@ export const getFilmTrailerData = async (id: number) => {
 };
 
 export const getKultSchauspielerData = async (page: number) => {
+  "use cache";
+  unstable_cacheLife("weeks");
   const startIndex = (page - 1) * 20;
   const endIndex = startIndex + 20;
   const kultSchauspielerData = [...kultCast].slice(startIndex, endIndex);
@@ -87,11 +100,15 @@ export const getKultSchauspielerData = async (page: number) => {
 };
 
 export const getPersonData = async (id: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const personData = await tmdbFetch<PersonDetails>(`/person/${id}`);
   return personData;
 };
 
 export const getRandomKultschauspieler = async (number: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const randomCast = [...kultCast]
     .sort(() => Math.random() - 0.5)
     .slice(0, number);
@@ -106,6 +123,8 @@ export const getRandomKultschauspieler = async (number: number) => {
 };
 
 export const getPersonCredits = async (id: number) => {
+  "use cache";
+  unstable_cacheLife("days");
   const personCreditsData = await tmdbFetch<PersonCredits>(
     `/person/${id}/movie_credits`
   );
@@ -113,6 +132,7 @@ export const getPersonCredits = async (id: number) => {
 };
 
 export const searchMovie = async (query: string, page: number = 1) => {
+  "use cache";
   const searchResultData = await tmdbFetch<SearchMovieResponse>(
     `/search/movie?query=${encodeURIComponent(query)}&page=${page}`
   );
@@ -120,6 +140,7 @@ export const searchMovie = async (query: string, page: number = 1) => {
 };
 
 export const searchPerson = async (query: string, page: number = 1) => {
+  "use cache";
   const searchResultData = await tmdbFetch<SearchPersonResponse>(
     `/search/person?query=${encodeURIComponent(query)}&page=${page}`
   );
@@ -127,6 +148,8 @@ export const searchPerson = async (query: string, page: number = 1) => {
 };
 
 export const getNowPlaying = async () => {
+  "use cache";
+  unstable_cacheLife("days");
   const minDate = new Date();
   minDate.setDate(minDate.getDate() - 14);
 

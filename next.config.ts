@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
-    dynamicIO: false,
+    useCache: true,
   },
   images: {
     remotePatterns: [new URL("https://image.tmdb.org/**")],
