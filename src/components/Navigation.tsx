@@ -110,7 +110,9 @@ export const MobileMenuComponent = () => {
   return (
     <Sidebar side="right">
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="space-y-2">
+          <SearchBar />
+
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href={"/kultschauspieler/"}>Kultschauspieler</Link>
