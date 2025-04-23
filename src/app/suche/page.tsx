@@ -26,7 +26,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = (await searchParams).query || "";
   const currentPage = Number((await searchParams).page) || 1;
 
-  // If no query is provided, show a search form
   if (!query) {
     return (
       <div className="min-h-screen p-8 pb-20 sm:p-20">
@@ -41,7 +40,6 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   }
 
   try {
-    // Fetch search results
     const movieResults = await searchMovie(query, currentPage);
 
     const personResults = await searchPerson(query, currentPage);
