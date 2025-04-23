@@ -54,7 +54,10 @@ const SpotlightSkeleton = () => {
         <Skeleton className="aspect-[2/3] w-full rounded-md" />
       </div>
       <div className="flex-3/4 flex flex-col gap-5">
-        <Skeleton className="h-8 w-64" />
+        <div>
+          <Skeleton className="h-4 w-34 mb-2" />
+          <Skeleton className="h-8 w-64" />
+        </div>
         <div className="space-y-2">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-full" />
