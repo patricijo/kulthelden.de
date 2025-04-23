@@ -40,11 +40,11 @@ export const Navigation = () => {
           </h2>
         </Link>
 
-        <div className="hidden md:flex items-center ml-auto gap-4">
+        <div className="hidden lg:flex items-center ml-auto gap-4">
           <NavigationMenuComponent />
           <ModeToggle />
         </div>
-        <SidebarTrigger className="md:hidden ml-auto" />
+        <SidebarTrigger className="lg:hidden ml-auto" />
       </div>
     </header>
   );
