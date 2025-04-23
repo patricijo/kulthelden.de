@@ -125,3 +125,43 @@ export const searchPerson = async (query: string, page: number = 1) => {
   );
   return searchResultData;
 };
+
+export const getNowPlaying = async () => {
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() - 14);
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 7);
+
+  const nowPlaying = await tmdbFetch<SearchMovieResponse>(
+    `/discover/movie?primary_release_date.gte=${minDate}&primary_release_date.lte=${maxDate}&region=DE&sort_by=popularity.desc`
+  );
+
+  if (nowPlaying && nowPlaying.results) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const futureMovies = nowPlaying.results.filter((movie) => {
+      if (!movie.release_date) return false;
+      const releaseDate = new Date(movie.release_date);
+      return releaseDate > today;
+    });
+
+    const pastOrPresentMovies = nowPlaying.results.filter((movie) => {
+      if (!movie.release_date) return true;
+      const releaseDate = new Date(movie.release_date);
+      return releaseDate <= today;
+    });
+
+    futureMovies.sort((a, b) => {
+      if (!a.release_date || !b.release_date) return 0;
+      return (
+        new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+      );
+    });
+
+    nowPlaying.results = [...futureMovies, ...pastOrPresentMovies];
+  }
+
+  return nowPlaying;
+};
