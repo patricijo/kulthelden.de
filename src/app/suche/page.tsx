@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 import Link from "next/link";
 import { searchMovie, searchPerson } from "@/data/getData";
 import {
@@ -42,7 +40,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   try {
     const movieResults = await searchMovie(query, currentPage);
 
-    const personResults = await searchPerson(query, currentPage);
+    const personResults = await searchPerson(query, 1);
 
     return (
       <>
@@ -50,34 +48,48 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           Suchergebnisse für &quot;{query}&quot;
         </h1>
 
-        <div className="space-y-2">
-          <h2 className="text-xl font-bold">Personen</h2>
-
-          <Carousel
-            className="max-w-full w-full"
-            opts={{ slidesToScroll: "auto" }}
-          >
-            <div className="flex absolute -top-10 right-0 gap-2 overflow-hidden">
-              <CarouselPrevious className="relative top-auto left-auto -translate-0" />
-              <CarouselNext className="relative top-auto left-auto right-auto -translate-0" />
+        {personResults.total_results > 0 && (
+          <div className="space-y-2">
+            <div className=" items-center">
+              <h2 className="text-xl font-bold">Personen</h2>
+              <span className="text-sm text-muted-foreground">
+                {personResults.total_results} gefunden
+              </span>
             </div>
-            <CarouselContent>
-              <Suspense fallback={<div>Lade Ergebnisse...</div>}>
+            <Carousel
+              className="max-w-full w-full"
+              opts={{ slidesToScroll: "auto" }}
+            >
+              <div className="flex absolute -top-10 right-0 gap-2 overflow-hidden">
+                <CarouselPrevious className="relative top-auto left-auto -translate-0" />
+                <CarouselNext className="relative top-auto left-auto right-auto -translate-0" />
+              </div>
+              <CarouselContent>
                 {personResults.results.map((person) => (
                   <CarouselItem
-                    className="basis-1/1 md:basis-1/3 lg:basis-1/7 "
+                    className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/7 "
                     key={person.id}
                   >
                     <CastCard castMember={person} />
                   </CarouselItem>
                 ))}
-              </Suspense>
-            </CarouselContent>
-          </Carousel>
-        </div>
+              </CarouselContent>
+            </Carousel>
+          </div>
+        )}
+
+        {/* Movies Section */}
         <div className="space-y-2">
-          <h2 className="text-xl font-bold">Filme</h2>
-          {movieResults.results.length > 0 && (
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-bold">Filme</h2>
+            {movieResults.total_results > 0 && (
+              <span className="text-sm text-muted-foreground">
+                {movieResults.total_results} gefunden (Seite {currentPage} von{" "}
+                {movieResults.total_pages})
+              </span>
+            )}
+          </div>
+          {movieResults.results.length > 0 ? (
             <>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
                 {movieResults.results.map((movie) => (
@@ -85,12 +97,18 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 ))}
               </div>
 
-              <PaginationComponent
-                href={`/suche?query=${encodeURIComponent(query)}&page=`}
-                pageNumber={currentPage}
-                totalPages={movieResults.total_pages}
-              />
+              {movieResults.total_pages > 1 && (
+                <PaginationComponent
+                  href={`/suche?query=${encodeURIComponent(query)}&page=`}
+                  pageNumber={currentPage}
+                  totalPages={movieResults.total_pages}
+                />
+              )}
             </>
+          ) : (
+            <p className="text-muted-foreground">
+              Keine Filme für &quot;{query}&quot; auf dieser Seite gefunden.
+            </p>
           )}
         </div>
       </>
