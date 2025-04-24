@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function KultGenreLayout({ children, params }: Props) {
   return (
-    <Suspense fallback={<>jhkhk</>}>
+    <Suspense fallback={children}>
       <KultGenreContent params={params}>{children}</KultGenreContent>
     </Suspense>
   );
