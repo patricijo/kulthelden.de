@@ -54,7 +54,9 @@ const NavigationMenuComponent = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList className="gap-4">
-        <SearchBar />
+        <NavigationMenuItem>
+          <SearchBar />
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/kultschauspieler#start">
             <Button
@@ -95,12 +97,16 @@ const NavigationMenuComponent = () => {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-
-        <Link href="/kulthelden#start">
-          <Button className="bg-transparent shadow-none" variant={"secondary"}>
-            Über Kulthelden
-          </Button>
-        </Link>
+        <NavigationMenuItem>
+          <Link href="/kulthelden#start">
+            <Button
+              className="bg-transparent shadow-none"
+              variant={"secondary"}
+            >
+              Über Kulthelden
+            </Button>
+          </Link>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -118,43 +124,42 @@ export const MobileMenuComponent = () => {
               <Link href={"/kultschauspieler/"}>Kultschauspieler</Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-
-          <Collapsible
-            title="Kult-Genres"
-            defaultOpen
-            className="group/collapsible"
-          >
-            <CollapsibleTrigger className="w-full">
-              <SidebarMenuItem>
+          <SidebarMenuItem>
+            <Collapsible
+              title="Kult-Genres"
+              defaultOpen
+              className="group/collapsible"
+            >
+              <CollapsibleTrigger className="w-full">
                 <SidebarMenuButton asChild className="w-full">
                   <div className="w-full">
                     Kult-Genres{" "}
                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                   </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </CollapsibleTrigger>
+                </SidebarMenuButton>{" "}
+              </CollapsibleTrigger>
 
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {kultGenres.map((genre) => {
-                    return (
-                      <SidebarMenuItem key={"mobile" + genre.id}>
-                        <SidebarMenuButton asChild className="ml-4">
-                          <Link
-                            href={"/kultgenre/" + genre.id + "_" + genre.url}
-                          >
-                            {genre.name}
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    );
-                  })}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </Collapsible>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {kultGenres.map((genre) => {
+                      return (
+                        <SidebarMenuItem key={"mobile" + genre.id}>
+                          <SidebarMenuButton asChild className="ml-4">
+                            <Link
+                              href={"/kultgenre/" + genre.id + "_" + genre.url}
+                            >
+                              {genre.name}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </Collapsible>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href={"/kulthelden/"}>Über KultHelden</Link>
