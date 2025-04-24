@@ -120,7 +120,7 @@ export default async function SchauspielerPage({ params }: Props) {
           <h1 className="text-2xl md:text-4xl font-bold">
             {schauspielerData.name}
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-secondary/10 rounded-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-lg">
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground">Geschlecht</span>
               <span className="font-medium">
