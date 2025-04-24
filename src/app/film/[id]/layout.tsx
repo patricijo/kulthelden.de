@@ -1,6 +1,8 @@
 import { getFilmData } from "@/data/getData";
 
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ReactNode, Suspense } from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -56,6 +58,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default async function KultGenreLayout({ children }: Props) {
-  return children;
+export default async function KultGenreLayout({ children, params }: Props) {
+  <Suspense fallback={children}>
+    <KultGenreContent params={params}>{children}</KultGenreContent>
+  </Suspense>;
 }
+
+const KultGenreContent = async ({
+  params,
+  children,
+}: {
+  params: Props["params"];
+  children: ReactNode;
+}) => {
+  const id = (await params).id.split("_")[0];
+
+  const numericId = parseInt(id, 10);
+
+  if (isNaN(numericId)) {
+    notFound();
+  }
+
+  const genreData = await getFilmData(numericId);
+
+  return (
+    <>
+      {JSON.stringify(genreData)}
+      {children}
+    </>
+  );
+};
