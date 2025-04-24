@@ -25,15 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const filmData = await getFilmData(numericId);
 
-    const releaseYear = filmData.release_date
-      ? new Date(filmData.release_date).getFullYear()
-      : null;
-
-    const description = `Details zum Film ${filmData.title}${
-      releaseYear ? ` (${releaseYear})` : ""
-    }. ${
-      filmData.tagline ? filmData.tagline + "." : ""
-    } Handlung, Besetzung und mehr auf KultHelden.de.`;
+    const description = `Details zum Film Handlung, Besetzung und mehr auf KultHelden.de.`;
 
     return {
       title: `${filmData.title} | KultHelden.de`,
