@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function KultGenreLayout({ children, params }: Props) {
-  <Suspense fallback={children}>
+  <Suspense fallback={<>jhkhk</>}>
     <KultGenreContent params={params}>{children}</KultGenreContent>
   </Suspense>;
 }
@@ -83,6 +83,7 @@ const KultGenreContent = async ({
 
   return (
     <>
+      zfzfzf
       {JSON.stringify(genreData)}
       {children}
     </>
