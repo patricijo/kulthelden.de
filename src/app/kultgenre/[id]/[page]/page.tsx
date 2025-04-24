@@ -34,8 +34,8 @@ const KultGenrePageContent = async ({
   return (
     <>
       {genreData.results.length > 0 && (
-        <>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mt-8">
+        <div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
             {genreData.results.map(
               (movie) =>
                 movie.media_type === "movie" && (
@@ -49,7 +49,7 @@ const KultGenrePageContent = async ({
             pageNumber={page}
             totalPages={genreData.total_pages}
           />
-        </>
+        </div>
       )}
     </>
   );

@@ -32,17 +32,19 @@ const KultSchauspielerPageContent = async ({ params }: Props) => {
 
       {kultSchauspielerData.results.length > 0 && (
         <>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 ">
-            {kultSchauspielerData.results.map((person) => {
-              return <CastCard castMember={person} key={person.id} />;
-            })}
-          </div>
+          <div>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 ">
+              {kultSchauspielerData.results.map((person) => {
+                return <CastCard castMember={person} key={person.id} />;
+              })}
+            </div>
 
-          <PaginationComponent
-            href={`/kultschauspieler/`}
-            pageNumber={numericPage}
-            totalPages={Math.ceil(kultSchauspielerData.totalItems / 20)}
-          />
+            <PaginationComponent
+              href={`/kultschauspieler/`}
+              pageNumber={numericPage}
+              totalPages={Math.ceil(kultSchauspielerData.totalItems / 20)}
+            />
+          </div>
         </>
       )}
     </>
