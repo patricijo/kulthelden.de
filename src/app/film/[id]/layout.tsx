@@ -12,8 +12,8 @@ type Props = {
 const imageBaseUrl = "https://image.tmdb.org/t/p/";
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const numericId = parseInt(id.split("_")[0], 10);
+  const id = (await params).id.split("_")[0];
+  const numericId = parseInt(id, 10);
 
   if (isNaN(numericId)) {
     return {
