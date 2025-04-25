@@ -29,11 +29,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? new Date(filmData.release_date).getFullYear()
       : null;
 
-    const description = `Details zum Film ${filmData.title}${
+    let description = `Details zum Film ${filmData.title}${
       releaseYear ? ` (${releaseYear})` : ""
     }. ${
       filmData.tagline ? filmData.tagline + "." : ""
     } Handlung, Besetzung und mehr auf KultHelden.de.`;
+
+    // Add a fallback if the constructed description is minimal or empty
+    if (!description || description.trim().length < 20) { // Example threshold
+        description = `Erfahre mehr über den Film ${filmData.title} auf KultHelden.de. Handlung, Besetzung und weitere Details.`;
+    }
 
     return {
       title: `${filmData.title} | KultHelden.de`,
