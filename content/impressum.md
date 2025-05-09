@@ -1,19 +1,18 @@
 # Impressum
 
 ## Angaben gemäß § 5 TMG
-KultHelden.de
-Musterstraße 123
-12345 Musterstadt
+Tim Küller
+Lichtenberger Str. 21
+10179 Berlin, DE
 Deutschland
 
 ## Kontakt
-Telefon: +49 123 456789
 E-Mail: info@kulthelden.de
 
 ## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV
-Max Mustermann
-Musterstraße 123
-12345 Musterstadt
+Tim Küller
+Lichtenberger Str. 21
+10179 Berlin, DE
 Deutschland
 
 ## Haftungsausschluss
