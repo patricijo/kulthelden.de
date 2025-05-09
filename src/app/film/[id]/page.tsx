@@ -189,7 +189,7 @@ export default async function FilmPage({ params }: Props) {
             fallback={
               <SkeletonCustom
                 rows={7}
-                className="basis-1/1 md:basis-1/3 lg:basis-1/7 pr-4"
+                className="basis-1/3 md:basis-1/5 lg:basis-1/7 pr-4"
               />
             }
           >
@@ -232,7 +232,7 @@ const FilmCast = async ({ id }: { id: number }) => {
         <CarouselContent>
           {castData.cast.map((person) => (
             <CarouselItem
-              className="basis-1/1 md:basis-1/3 lg:basis-1/7 "
+              className="basis-1/3 md:basis-1/5 lg:basis-1/7 "
               key={person.cast_id}
             >
               <CastCard castMember={person} />
